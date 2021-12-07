@@ -1,6 +1,6 @@
 package entity;
 
-import main.Window;
+import main.GamePanel;
 import util.Direction;
 
 import java.awt.*;
@@ -19,8 +19,8 @@ public abstract class Entity {
     protected Direction dir;
 
     public Entity() {
-        this.width = Window.tileSize;
-        this.height = Window.tileSize;
+        this.width = GamePanel.tileSize;
+        this.height = GamePanel.tileSize;
         dir = new Direction();
     }
 

@@ -1,5 +1,6 @@
 package entity;
 
+import main.GamePanel;
 import main.Window;
 import util.ControlHandler;
 
@@ -9,7 +10,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Objects;
 
 public class Player extends Entity { //TODO moveQueue? get rid of moveTime?
 
@@ -93,6 +93,6 @@ public class Player extends Entity { //TODO moveQueue? get rid of moveTime?
 
         //g2.fillRect(x*Window.tileSize, y*Window.tileSize, width, height);
 
-        g2.drawImage(playerImage, x*Window.tileSize, y*Window.tileSize, Window.tileSize, Window.tileSize, null);
+        g2.drawImage(playerImage, x* GamePanel.tileSize, y*GamePanel.tileSize, GamePanel.tileSize, GamePanel.tileSize, null);
     }
 }

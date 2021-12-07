@@ -1,15 +1,11 @@
 package main;
 
-import util.Keyboard;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class Window {
-
-    public static int tileSize = 48;
 
     public JFrame frame;
 
@@ -21,9 +17,6 @@ public class Window {
 
         width /= 1.5;
         height /= 1.5;
-
-        GraphicsEnvironment graphics = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        GraphicsDevice device = graphics.getDefaultScreenDevice();
 
         frame = new JFrame(title);
         frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -49,5 +42,8 @@ public class Window {
 
         frame.setVisible(true);
         gp.setVisible(true);
+
+        Thread thread = new Thread(gp);
+        thread.start();
     }
 }
