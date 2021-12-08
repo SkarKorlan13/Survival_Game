@@ -9,7 +9,11 @@ public class Main{
     public static void main(String[] args) {
 
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-        window = new Window("2D Survival Game", screen.width, screen.height);
+
+        screen.height /= 2;
+        screen.width /= 2;
+
+        window = new Window("2D Survival Game", screen);
 
     }
 }

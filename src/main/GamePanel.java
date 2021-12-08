@@ -18,21 +18,14 @@ public class GamePanel extends JPanel implements Runnable{
 
     Player player;
 
-    public GamePanel(Window window, int width, int height) {
-        this.setPreferredSize(new Dimension(width, height));
-        this.setSize(width, height);
+    public GamePanel(Window window, Dimension dimension) {
+        this.setPreferredSize(dimension);
+        this.setSize(dimension);
         this.setBackground(Color.BLACK);
         this.addKeyListener(Keyboard.getListener());
         this.setFocusable(true);
         this.window = window;
         this.player = new Player();
-    }
-
-    public void paintComponent(Graphics g) {
-        Graphics2D g2 = (Graphics2D) g;
-        super.paintComponent(g);
-
-        player.render(g2);
     }
 
     @Override
@@ -87,4 +80,12 @@ public class GamePanel extends JPanel implements Runnable{
     private void update() {
         Keyboard.update();
     }
+
+    public void paintComponent(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g;
+        super.paintComponent(g);
+
+        player.render(g2);
+    }
+
 }
