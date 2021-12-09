@@ -1,5 +1,7 @@
 package main;
 
+import util.ControlHandler;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
@@ -9,16 +11,30 @@ import java.awt.event.WindowEvent;
 
 public class Window {
 
-    public JFrame frame;
+    public static JFrame frame;
 
-    public GamePanel gp;
+    public static GamePanel gp;
 
-    public boolean close;
+    public static boolean close = false;
 
-    public int width;
-    public int height;
+    public static int width;
+    public static int height;
 
-    public Window(String title, Dimension dimension) {
+    public static double aspectWidth;
+    public static double aspectHeight;
+
+                                                        //weird numbers (14 and 37)
+    public static Dimension maxSize = new Dimension(1540+14, 770+37);
+    public static Dimension lastSize;
+
+    public static boolean fullscreen=false;
+
+    public static void init(String title, Dimension dimension) {
+
+        dimension.width *= 0.5;
+        dimension.height *= 0.5;
+
+        lastSize = dimension;
 
         width = dimension.width;
         height = dimension.height;
@@ -27,8 +43,9 @@ public class Window {
         frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         frame.setPreferredSize(dimension);
         frame.setSize(dimension);
-        //frame.setResizable(false);
-        //frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        frame.setResizable(false);
+
+        //frame.setState(JFrame.MAXIMIZED_BOTH);
         //frame.setUndecorated(true);
 
         frame.addWindowListener(new WindowAdapter() {
@@ -43,22 +60,43 @@ public class Window {
             @Override
             public void componentResized(ComponentEvent e) {
                 super.componentResized(e);
+
                 width = gp.getWidth();
                 height = gp.getHeight();
+                GamePanel.tileSize = width/24;
                 System.out.println(width + " # " + height);
             }
         });
 
-        gp = new GamePanel(this, dimension);
+        gp = new GamePanel(dimension);
 
         frame.add(gp);
         frame.pack();
-        frame.setLocationRelativeTo(null);
+        frame.setLocation(-10, 0);
 
         frame.setVisible(true);
         gp.setVisible(true);
 
         Thread thread = new Thread(gp);
         thread.start();
+    }
+
+    public static void tick() {
+
+        //RESIZE
+        if (ControlHandler.TEST1.pressedTick()) {
+            frame.setSize((int)(frame.getWidth() + 10*aspectWidth), (int)(frame.getHeight() + 10*aspectHeight));
+        } else if (ControlHandler.TEST2.pressedTick()) {
+            frame.setSize((int)(frame.getWidth() - 10*aspectWidth), (int)(frame.getHeight() - 10*aspectHeight));
+        } else if (ControlHandler.TEST3.pressedTick()) {
+            if (fullscreen) {
+                frame.setSize(lastSize);
+            } else {
+                lastSize = frame.getSize();
+                frame.setSize(maxSize);
+            }
+
+            fullscreen = !fullscreen;
+        }
     }
 }

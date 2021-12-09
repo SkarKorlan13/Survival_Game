@@ -4,16 +4,19 @@ import java.awt.*;
 
 public class Main{
 
-    public static Window window;
-
     public static void main(String[] args) {
 
-        Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+        //Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
 
-        screen.height /= 2;
-        screen.width /= 2;
+        DisplayMode displayMode = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode();
 
-        window = new Window("2D Survival Game", screen);
+        Dimension screen = new Dimension(displayMode.getWidth(), displayMode.getHeight());
+
+        Window.aspectWidth = 1;
+        Window.aspectHeight = 0.5;
+        //Window.aspectHeight = ((double) screen.height/screen.width);
+
+        Window.init("2D Survival Game", screen);
 
     }
 }

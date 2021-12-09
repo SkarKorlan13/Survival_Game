@@ -1,4 +1,4 @@
-package entity;
+package world.entity;
 
 import main.GamePanel;
 import util.Direction;

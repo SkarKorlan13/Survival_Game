@@ -1,8 +1,9 @@
-package entity;
+package world.entity;
 
 import main.GamePanel;
 import main.Window;
 import util.ControlHandler;
+import world.ImageHandler;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -10,8 +11,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Objects;
 
-public class Player extends Entity { //TODO moveQueue? get rid of moveTime?
+public class Player extends Entity {
 
     private int moveTicks = 0;
     private boolean isMove = false;
@@ -22,17 +24,7 @@ public class Player extends Entity { //TODO moveQueue? get rid of moveTime?
         this.moveTime = 20;
         this.x = 0;
         this.y = 0;
-        getPlayerImage();
-    }
-
-    private void getPlayerImage() {
-        try {
-            File imageFile = new File("res/entity/player/Player.png");
-            FileInputStream in = new FileInputStream(imageFile);
-            playerImage = ImageIO.read(in);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        this.playerImage = ImageHandler.PLAYER;
     }
 
     @Override

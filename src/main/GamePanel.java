@@ -1,31 +1,36 @@
 package main;
 
-import entity.Player;
+import world.World;
+import world.entity.Player;
 import util.Keyboard;
 import util.Time;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class GamePanel extends JPanel implements Runnable{
+public class GamePanel extends JPanel implements Runnable {
 
     public static int tileSize = 48;
+
+    public static int maxTileX = 24;
+    public static int maxTileY = 12;
 
     private static int frames, ticks, fps, tps;
     private static long lastSecond, lastFrame, frameTime, tickTimeRemaining;
 
-    Window window;
+    public static Player player;
 
-    Player player;
+    public static World world;
 
-    public GamePanel(Window window, Dimension dimension) {
+    public GamePanel(Dimension dimension) {
         this.setPreferredSize(dimension);
         this.setSize(dimension);
         this.setBackground(Color.BLACK);
         this.addKeyListener(Keyboard.getListener());
         this.setFocusable(true);
-        this.window = window;
-        this.player = new Player();
+
+        player = new Player();
+        world = new World();
     }
 
     @Override
@@ -33,7 +38,7 @@ public class GamePanel extends JPanel implements Runnable{
 
         lastFrame = Time.now() - Time.NS_PER_TICK;
 
-        while (!window.close) {
+        while (!Window.close) {
             long now = Time.now();
 
             if (now - lastSecond >= Time.NS_PER_SECOND) {
@@ -58,7 +63,7 @@ public class GamePanel extends JPanel implements Runnable{
 
             update();
 
-            window.gp.repaint();
+            repaint();
             frames++;
 
             try {
@@ -75,6 +80,7 @@ public class GamePanel extends JPanel implements Runnable{
     private void tick() {
         Keyboard.tick();
         player.tick();
+        Window.tick();
     }
 
     private void update() {
@@ -85,7 +91,8 @@ public class GamePanel extends JPanel implements Runnable{
         Graphics2D g2 = (Graphics2D) g;
         super.paintComponent(g);
 
+        world.render(g2);
+
         player.render(g2);
     }
-
 }
