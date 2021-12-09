@@ -4,18 +4,11 @@ public abstract class Tile {
     public static final int TILE_MAX = 256;
     public static final Tile[] TILES = new Tile[TILE_MAX];
 
-    public static final TileGrass GRASS = new TileGrass(0);
-
-    //public static final GRASS = new TileGrass(0);
-    //public static final WATER = new TileWater(1);
-    //public static final TREE_OAK = new TileTree_Oak(2);
-    //public static final TREE_OAK_APPLES = new TileTree_Oak_Apples(3);
-    //public static final TREE_PINE = new TileTree_Pine(4);
-    //public static final BUSH = new TileBush(5);
-    //public static final BUSH_BERRIES = new TileBush_Berries(6);
-    //public static final FARM_DRY = new TileFarm_Dry(7);
-    //public static final FARM_DAMP = new TileFarm_Damp(8);
-    //public static final FARM_WET = new TileFarm_Wet(9);
+    public static final TileTree_Oak TREE_OAK = new TileTree_Oak(2);
+    public static final TileTree_Oak_Apples TREE_OAK_APPLES = new TileTree_Oak_Apples(3);
+    public static final TileTree_Pine TREE_PINE = new TileTree_Pine(4);
+    public static final TileBush BUSH = new TileBush(5);
+    //public static final TileBush_Berries BUSH_BERRIES = new TileBush_Berries(6);
 
     //public int x;
     //public int y;

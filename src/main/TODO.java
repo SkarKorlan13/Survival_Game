@@ -2,6 +2,8 @@ package main;
 /*
 TODO:
 
+add icon
+
 add tiles
 
 add world

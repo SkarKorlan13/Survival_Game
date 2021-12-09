@@ -12,8 +12,8 @@ public class GamePanel extends JPanel implements Runnable {
 
     public static int tileSize = 48;
 
-    public static int maxTileX = 24;
-    public static int maxTileY = 12;
+    public static int maxTileX = 25; //24 + 1 for player in middle
+    public static int maxTileY = 13; //12 + 1 for player in middle
 
     private static int frames, ticks, fps, tps;
     private static long lastSecond, lastFrame, frameTime, tickTimeRemaining;
@@ -80,7 +80,7 @@ public class GamePanel extends JPanel implements Runnable {
     private void tick() {
         Keyboard.tick();
         player.tick();
-        Window.tick();
+        //Window.tick();
     }
 
     private void update() {

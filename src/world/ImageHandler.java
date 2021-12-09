@@ -9,6 +9,8 @@ public class ImageHandler {
 
     public static BufferedImage[] images;
 
+    public static BufferedImage ICON;
+
     public static BufferedImage PLAYER;
 
     public static BufferedImage BUSH;

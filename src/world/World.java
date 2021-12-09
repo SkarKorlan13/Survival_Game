@@ -21,7 +21,7 @@ public class World {
 
     public World() {
         try {
-            FileReader in = new FileReader("tempWorld.txt");
+            FileReader in = new FileReader("res/world/tempWorld.txt");
             BufferedReader read = new BufferedReader(in);
 
             for (int y = 0; y < tiles.length; y++) {
