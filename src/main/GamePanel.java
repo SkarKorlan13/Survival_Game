@@ -18,7 +18,7 @@ public class GamePanel extends JPanel implements Runnable {
     private static int frames, ticks, fps, tps;
     private static long lastSecond, lastFrame, frameTime, tickTimeRemaining;
 
-    public static World world;
+    public World world;
 
     public GamePanel(Dimension dimension) {
         this.setPreferredSize(dimension);
@@ -90,5 +90,7 @@ public class GamePanel extends JPanel implements Runnable {
         super.paintComponent(g);
 
         world.render(g2);
+
+        GameUIHandler.render(g2);
     }
 }

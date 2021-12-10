@@ -13,16 +13,16 @@ public class ImageHandler {
 
     public static int PLAYER=10;
 
-    public static int BUSH=5;
-    public static int BUSH_BERRIES=6;
-    public static int FARM_DAMP=8;
-    public static int FARM_DRY=9;
-    public static int FARM_WET=7;
     public static int GRASS=0;
+    public static int WATER=1;
     public static int TREE_OAK=2;
     public static int TREE_OAK_APPLES=3;
     public static int TREE_PINE=4;
-    public static int WATER=1;
+    public static int BUSH=5;
+    public static int BUSH_BERRIES=6;
+    public static int FARM_WET=7;
+    public static int FARM_DAMP=8;
+    public static int FARM_DRY=9;
 
     static {
         try {

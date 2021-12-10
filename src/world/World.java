@@ -57,9 +57,9 @@ public class World {
 
     public void generate() {
 
-        //TILES
-
         OpenSimplexNoise noise = new OpenSimplexNoise(seed);
+
+        //GROUND TILES
 
         for (int y = 0; y < size; y++) {
             for (int x = 0; x < size; x++) {
@@ -71,6 +71,20 @@ public class World {
                 }
             }
         }
+
+        //TILES
+        /*
+        for (int y = 0; y < size; y++) {
+            for (int x = 0; x < size; x++) {
+                double eval = noise.eval((double)x/10, (double)y/10);
+                if (eval < -0.5) {
+                    tiles[y][x] = Tile.TILES[0];
+                } else {
+                    tiles[y][x] = 0;
+                }
+            }
+        }
+         */
     }
 
     public void tick() {
@@ -99,7 +113,16 @@ public class World {
 
 
         //TILES
-
+        /*
+        for (int y = 0; y < GamePanel.maxTileY; y++) {
+            for (int x = 0; x < GamePanel.maxTileX; x++) {
+                g2.drawImage(ImageHandler.images[tiles[y + TL.y][x + TL.x].id],
+                        x*GamePanel.tileSize, y*GamePanel.tileSize,
+                        GamePanel.tileSize, GamePanel.tileSize,
+                        null);
+            }
+        }
+         */
 
         //ENTITIES
         player.render(g2);

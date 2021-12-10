@@ -1,5 +1,6 @@
 package world.tile;
 
+@SuppressWarnings("StaticInitializerReferencesSubClass")
 public abstract class Tile {
     public static final int TILE_MAX = 256;
     public static final Tile[] TILES = new Tile[TILE_MAX];
@@ -8,7 +9,7 @@ public abstract class Tile {
     public static final TileTree_Oak_Apples TREE_OAK_APPLES = new TileTree_Oak_Apples(3);
     public static final TileTree_Pine TREE_PINE = new TileTree_Pine(4);
     public static final TileBush BUSH = new TileBush(5);
-    //public static final TileBush_Berries BUSH_BERRIES = new TileBush_Berries(6);
+    public static final TileBush_Berries BUSH_BERRIES = new TileBush_Berries(6);
 
     //public int x;
     //public int y;
