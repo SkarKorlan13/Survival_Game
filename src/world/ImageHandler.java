@@ -9,38 +9,42 @@ public class ImageHandler {
 
     public static BufferedImage[] images;
 
-    public static BufferedImage ICON;
+    //public static BufferedImage ICON; TODO
 
-    public static BufferedImage PLAYER;
+    public static int PLAYER=10;
 
-    public static BufferedImage BUSH;
-    public static BufferedImage BUSH_BERRIES;
-    public static BufferedImage FARM_DAMP;
-    public static BufferedImage FARM_DRY;
-    public static BufferedImage FARM_WET;
-    public static BufferedImage GRASS;
-    public static BufferedImage TREE_OAK;
-    public static BufferedImage TREE_OAK_APPLES;
-    public static BufferedImage TREE_PINE;
-    public static BufferedImage WATER;
+    public static int BUSH=5;
+    public static int BUSH_BERRIES=6;
+    public static int FARM_DAMP=8;
+    public static int FARM_DRY=9;
+    public static int FARM_WET=7;
+    public static int GRASS=0;
+    public static int TREE_OAK=2;
+    public static int TREE_OAK_APPLES=3;
+    public static int TREE_PINE=4;
+    public static int WATER=1;
 
     static {
         try {
             FileInputStream in;
 
-            PLAYER = ImageIO.read(in = new FileInputStream("res/entity/Player.png"));
 
+            //noinspection UnusedAssignment
             images = new BufferedImage[] {
-                    GRASS = ImageIO.read(in = new FileInputStream("res/tile/Grass.png")),
-                    WATER = ImageIO.read(in = new FileInputStream("res/tile/Water.png")),
-                    TREE_OAK = ImageIO.read(in = new FileInputStream("res/tile/Tree_Oak.png")),
-                    TREE_OAK_APPLES = ImageIO.read(in = new FileInputStream("res/tile/Tree_Oak_Apples.png")),
-                    TREE_PINE = ImageIO.read(in = new FileInputStream("res/tile/Tree_Pine.png")),
-                    BUSH = ImageIO.read(in = new FileInputStream("res/tile/Bush.png")),
-                    BUSH_BERRIES = ImageIO.read(in = new FileInputStream("res/tile/Bush_Berries.png")),
-                    FARM_DRY = ImageIO.read(in = new FileInputStream("res/tile/Farm_Wet.png")),
-                    FARM_DAMP = ImageIO.read(in = new FileInputStream("res/tile/Farm_Damp.png")),
-                    FARM_WET = ImageIO.read(in = new FileInputStream("res/tile/Farm_Dry.png"))
+                    //TILES
+                    ImageIO.read(in = new FileInputStream("res/tile/Grass.png")),
+                    ImageIO.read(in = new FileInputStream("res/tile/Water.png")),
+                    ImageIO.read(in = new FileInputStream("res/tile/Tree_Oak.png")),
+                    ImageIO.read(in = new FileInputStream("res/tile/Tree_Oak_Apples.png")),
+                    ImageIO.read(in = new FileInputStream("res/tile/Tree_Pine.png")),
+                    ImageIO.read(in = new FileInputStream("res/tile/Bush.png")),
+                    ImageIO.read(in = new FileInputStream("res/tile/Bush_Berries.png")),
+                    ImageIO.read(in = new FileInputStream("res/tile/Farm_Wet.png")),
+                    ImageIO.read(in = new FileInputStream("res/tile/Farm_Damp.png")),
+                    ImageIO.read(in = new FileInputStream("res/tile/Farm_Dry.png")),
+
+                    //ENTITIES
+                    ImageIO.read(in = new FileInputStream("res/entity/Player.png"))
             };
 
 

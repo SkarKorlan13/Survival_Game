@@ -1,17 +1,13 @@
 package world.entity;
 
 import main.GamePanel;
-import main.Window;
 import util.ControlHandler;
 import world.ImageHandler;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.Objects;
+
+import static world.ImageHandler.PLAYER;
 
 public class Player extends Entity {
 
@@ -19,12 +15,12 @@ public class Player extends Entity {
     private boolean isMove = false;
     private BufferedImage playerImage;
 
-    public Player() {
+    public Player(int x, int y) {
         super();
         this.moveTime = 20;
-        this.x = 0;
-        this.y = 0;
-        this.playerImage = ImageHandler.PLAYER;
+        this.x = x;
+        this.y = y;
+        this.playerImage = ImageHandler.images[PLAYER];
     }
 
     @Override
@@ -47,30 +43,39 @@ public class Player extends Entity {
 
         //UPDATE POSITION
         if (isMove) {
+            int ny = y;
+            int nx = x;
             if (dir.direction == 0 && ControlHandler.UP.down()) {
-                y--;
+                ny--;
                 isMove = false;
             } else if (dir.direction == 2 && ControlHandler.DOWN.down()) {
-                y++;
+                ny++;
                 isMove = false;
             } else if (dir.direction == 3 && ControlHandler.LEFT.down()) {
-                x--;
+                nx--;
                 isMove = false;
             } else if (dir.direction == 1 && ControlHandler.RIGHT.down()) {
-                x++;
+                nx++;
                 isMove = false;
             } else if (ControlHandler.UP.down()) {
-                y--;
+                ny--;
                 isMove = false;
             } else if (ControlHandler.DOWN.down()) {
-                y++;
+                ny++;
                 isMove = false;
             } else if (ControlHandler.LEFT.down()) {
-                x--;
+                nx--;
                 isMove = false;
             } else if (ControlHandler.RIGHT.down()) {
-                x++;
+                nx++;
                 isMove = false;
+            }
+
+            if (nx != x || ny != y) {
+                lastX = x;
+                lastY = y;
+                x = nx;
+                y = ny;
             }
         }
 
@@ -85,6 +90,6 @@ public class Player extends Entity {
 
         //g2.fillRect(x*Window.tileSize, y*Window.tileSize, width, height);
 
-        g2.drawImage(playerImage, x* GamePanel.tileSize, y*GamePanel.tileSize, GamePanel.tileSize, GamePanel.tileSize, null);
+        g2.drawImage(playerImage, GamePanel.tileSize*(GamePanel.maxTileX/2), GamePanel.tileSize*(GamePanel.maxTileY/2), GamePanel.tileSize, GamePanel.tileSize, null);
     }
 }

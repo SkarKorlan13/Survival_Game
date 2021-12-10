@@ -9,6 +9,8 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import static world.ImageHandler.*;
+
 public class Window {
 
     public static JFrame frame;
@@ -41,7 +43,7 @@ public class Window {
         //frame.setPreferredSize(minSize);
         //frame.setSize(minSize);
         frame.setResizable(true);
-        frame.setIconImage(ImageHandler.PLAYER);
+        frame.setIconImage(ImageHandler.images[PLAYER]);
 
         //frame.setState(JFrame.MAXIMIZED_BOTH);
         //frame.setUndecorated(true);

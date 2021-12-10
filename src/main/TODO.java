@@ -4,12 +4,10 @@ TODO:
 
 add icon
 
-add tiles
+add tile interactions etc.
 
-add world
+world
     add map
-
-center rendering on character
 
 
  */

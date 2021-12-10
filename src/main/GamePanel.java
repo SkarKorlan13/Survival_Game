@@ -18,8 +18,6 @@ public class GamePanel extends JPanel implements Runnable {
     private static int frames, ticks, fps, tps;
     private static long lastSecond, lastFrame, frameTime, tickTimeRemaining;
 
-    public static Player player;
-
     public static World world;
 
     public GamePanel(Dimension dimension) {
@@ -29,8 +27,8 @@ public class GamePanel extends JPanel implements Runnable {
         this.addKeyListener(Keyboard.getListener());
         this.setFocusable(true);
 
-        player = new Player();
-        world = new World();
+        Player player = new Player(128, 128);
+        world = new World(256, 137117711, player);
     }
 
     @Override
@@ -79,7 +77,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     private void tick() {
         Keyboard.tick();
-        player.tick();
+        world.tick();
         //Window.tick();
     }
 
@@ -92,7 +90,5 @@ public class GamePanel extends JPanel implements Runnable {
         super.paintComponent(g);
 
         world.render(g2);
-
-        player.render(g2);
     }
 }
