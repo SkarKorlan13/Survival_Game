@@ -5,13 +5,16 @@ import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+@SuppressWarnings("UnusedAssignment")
 public class ImageHandler {
 
-    public static BufferedImage[] images;
+    public static BufferedImage[] groundTiles;
+    public static BufferedImage[] tiles;
+    public static BufferedImage[] entities;
 
     //public static BufferedImage ICON; TODO
 
-    public static int PLAYER=10;
+    public static int PLAYER=0;
 
     public static int GRASS=0;
     public static int WATER=1;
@@ -28,23 +31,24 @@ public class ImageHandler {
         try {
             FileInputStream in;
 
-
-            //noinspection UnusedAssignment
-            images = new BufferedImage[] {
-                    //TILES
+            groundTiles = new BufferedImage[] {
                     ImageIO.read(in = new FileInputStream("res/tile/Grass.png")),
                     ImageIO.read(in = new FileInputStream("res/tile/Water.png")),
+                    ImageIO.read(in = new FileInputStream("res/tile/Farm_Wet.png")),
+                    ImageIO.read(in = new FileInputStream("res/tile/Farm_Damp.png")),
+                    ImageIO.read(in = new FileInputStream("res/tile/Farm_Dry.png")),
+            };
+
+            tiles = new BufferedImage[] {
                     ImageIO.read(in = new FileInputStream("res/tile/Tree_Oak.png")),
                     ImageIO.read(in = new FileInputStream("res/tile/Tree_Oak_Apples.png")),
                     ImageIO.read(in = new FileInputStream("res/tile/Tree_Pine.png")),
                     ImageIO.read(in = new FileInputStream("res/tile/Bush.png")),
                     ImageIO.read(in = new FileInputStream("res/tile/Bush_Berries.png")),
-                    ImageIO.read(in = new FileInputStream("res/tile/Farm_Wet.png")),
-                    ImageIO.read(in = new FileInputStream("res/tile/Farm_Damp.png")),
-                    ImageIO.read(in = new FileInputStream("res/tile/Farm_Dry.png")),
+            };
 
-                    //ENTITIES
-                    ImageIO.read(in = new FileInputStream("res/entity/Player.png"))
+            entities = new BufferedImage[] {
+                    ImageIO.read(in = new FileInputStream("res/entity/Player.png")),
             };
 
 

@@ -1,26 +1,23 @@
 package world.entity;
 
-import main.GamePanel;
+import main.Global;
 import util.ControlHandler;
 import world.ImageHandler;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
-
-import static world.ImageHandler.PLAYER;
 
 public class Player extends Entity {
 
     private int moveTicks = 0;
     private boolean isMove = false;
-    private BufferedImage playerImage;
 
     public Player(int x, int y) {
         super();
         this.moveTime = 20;
-        this.x = x;
-        this.y = y;
-        this.playerImage = ImageHandler.images[PLAYER];
+        this.pos = new Point(x, y);
+        this.lastPos = new Point(pos);
+
+        this.id = ImageHandler.PLAYER;
     }
 
     @Override
@@ -43,39 +40,53 @@ public class Player extends Entity {
 
         //UPDATE POSITION
         if (isMove) {
-            int ny = y;
-            int nx = x;
+            Point newPos = new Point(pos);
+
             if (dir.direction == 0 && ControlHandler.UP.down()) {
-                ny--;
+                newPos.y--;
                 isMove = false;
             } else if (dir.direction == 2 && ControlHandler.DOWN.down()) {
-                ny++;
+                newPos.y++;
                 isMove = false;
             } else if (dir.direction == 3 && ControlHandler.LEFT.down()) {
-                nx--;
+                newPos.x--;
                 isMove = false;
             } else if (dir.direction == 1 && ControlHandler.RIGHT.down()) {
-                nx++;
+                newPos.x++;
                 isMove = false;
             } else if (ControlHandler.UP.down()) {
-                ny--;
+                newPos.y--;
                 isMove = false;
             } else if (ControlHandler.DOWN.down()) {
-                ny++;
+                newPos.y++;
                 isMove = false;
             } else if (ControlHandler.LEFT.down()) {
-                nx--;
+                newPos.x--;
                 isMove = false;
             } else if (ControlHandler.RIGHT.down()) {
-                nx++;
+                newPos.x++;
                 isMove = false;
             }
 
-            if (nx != x || ny != y) {
-                lastX = x;
-                lastY = y;
-                x = nx;
-                y = ny;
+            if (!(newPos.x == pos.x && newPos.y == pos.y)) {    //TODO Fix this massive mess
+                if (Global.game.worldBounds.contains(newPos)) {
+                    System.out.println("Move");
+                    lastPos.setLocation(pos);
+                    pos.setLocation(newPos);
+
+                    if (!Global.game.world.moveEntity(lastPos, pos)) {
+                        System.out.println("Player Move Failed");
+                    }
+
+                    Global.game.updateCameraPos(newPos);
+                } else {
+                    System.out.println("No Move");
+                }
+
+
+                //if (Global.game.worldSize - pos.x < Global.maxTileX/2)
+                //Global.game.worldSize - newPos.x <= Global.maxTileX/2 || Global.game.worldSize - newPos.y <= Global.maxTileY/2
+                //updateCameraPos();
             }
         }
 
@@ -90,6 +101,6 @@ public class Player extends Entity {
 
         //g2.fillRect(x*Window.tileSize, y*Window.tileSize, width, height);
 
-        g2.drawImage(playerImage, GamePanel.tileSize*(GamePanel.maxTileX/2), GamePanel.tileSize*(GamePanel.maxTileY/2), GamePanel.tileSize, GamePanel.tileSize, null);
+        g2.drawImage(ImageHandler.entities[this.id], Global.tileSize*(Global.maxTileX/2), Global.tileSize*(Global.maxTileY/2), Global.tileSize, Global.tileSize, null);
     }
 }

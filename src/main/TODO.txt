@@ -1,0 +1,23 @@
+/----------TODO----------/
+
+get main menu working
+    menu selection
+    world creation
+    world load saves
+
+font possibilities:
+    Courier New
+    DialogInput
+    Monospaced
+
+current font choice:
+    Monospaced
+
+
+add icon
+
+add tile interactions etc.
+
+world
+    add world gen of tiles (trees etc.)
+    add map

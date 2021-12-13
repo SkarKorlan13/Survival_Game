@@ -1,5 +1,7 @@
+/*
 package main;
 
+import gui.GUIHandler;
 import world.World;
 import world.entity.Player;
 import util.Keyboard;
@@ -12,6 +14,8 @@ public class GamePanel extends JPanel implements Runnable {
 
     public static int tileSize = 48;
 
+    public static boolean gamePaused = false;
+
     public static int maxTileX = 25; //24 + 1 for player in middle
     public static int maxTileY = 13; //12 + 1 for player in middle
 
@@ -19,6 +23,8 @@ public class GamePanel extends JPanel implements Runnable {
     private static long lastSecond, lastFrame, frameTime, tickTimeRemaining;
 
     public World world;
+
+    public GUIHandler guiHandler;
 
     public GamePanel(Dimension dimension) {
         this.setPreferredSize(dimension);
@@ -29,6 +35,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         Player player = new Player(128, 128);
         world = new World(256, 137117711, player);
+        guiHandler = new GUIHandler();
     }
 
     @Override
@@ -77,8 +84,12 @@ public class GamePanel extends JPanel implements Runnable {
 
     private void tick() {
         Keyboard.tick();
-        world.tick();
-        //Window.tick();
+        guiHandler.tick();
+        if (!gamePaused) {
+            world.tick();
+        } else {
+
+        }
     }
 
     private void update() {
@@ -91,6 +102,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         world.render(g2);
 
-        GameUIHandler.render(g2);
+        guiHandler.render(g2);
     }
 }
+ */

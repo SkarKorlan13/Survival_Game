@@ -26,8 +26,20 @@ public class Main{
         //Window.aspectHeight = ((double) screen.height/screen.width);
          */
 
-        Window.maxSize = new Dimension(GamePanel.tileSize*GamePanel.maxTileX, GamePanel.tileSize*GamePanel.maxTileY);
+        //Global.setState(Global.StateType.GAME);
+        Global.setState(Global.StateType.MENU);
 
+        Window.maxSize = new Dimension(Global.tileSize*Global.maxTileX, Global.tileSize*Global.maxTileY);
         Window.init("2D Survival Game");
+
+        new Thread(new Window()).start();
     }
 }
+
+
+
+
+
+
+
+

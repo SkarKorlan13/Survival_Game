@@ -1,6 +1,6 @@
 package world;
 
-import main.GamePanel;
+import main.Global;
 import util.OpenSimplexNoise;
 import world.entity.Entity;
 import world.entity.Player;
@@ -17,17 +17,18 @@ public class World {
     public Tile[][] tiles;      //Trees, bushes, etc.
     public Entity[][] entities; //Player, animals, etc.
 
-    BufferedImage image;
-
     public int size;
     public long seed;
-    public Player player;
 
-    public World(int size, long seed, Player player) {
+    public OpenSimplexNoise noise;
+
+
+    public World(int size, long seed) {
 
         this.size = size;
         this.seed = seed;
-        this.player = player;
+
+        this.noise = new OpenSimplexNoise(seed);
 
         groundTiles = new int[size][size];
         tiles = new Tile[size][size];
@@ -56,8 +57,6 @@ public class World {
     }
 
     public void generate() {
-
-        OpenSimplexNoise noise = new OpenSimplexNoise(seed);
 
         //GROUND TILES
 
@@ -88,7 +87,22 @@ public class World {
     }
 
     public void tick() {
-        player.tick();
+
+        for (Entity[] y : entities) {
+            for (Entity e : y) {
+                if (e == null) continue;
+                e.tick();
+            }
+        }
+    }
+
+    public void update() {
+        for (Entity[] y : entities) {
+            for (Entity e : y) {
+                if (e == null) return;
+                e.update();
+            }
+        }
     }
 
     public void render(Graphics2D g2) {
@@ -96,17 +110,17 @@ public class World {
 
         Point TL = new Point(); //Top Left
         //Point BR = new Point(); //Bottom Right
-        TL.x = player.x - (GamePanel.maxTileX/2);
-        TL.y = player.y - (GamePanel.maxTileY/2);
-        //BR.x = TL.x + GamePanel.maxTileX;
-        //BR.y = TL.y + GamePanel.maxTileY;
+        TL.x = Global.game.camera.x - (Global.maxTileX/2);
+        TL.y = Global.game.camera.y - (Global.maxTileY/2);
+        //BR.x = TL.x + Global.maxTileX;
+        //BR.y = TL.y + Global.maxTileY;
 
         //GROUND TILES
-        for (int y = 0; y < GamePanel.maxTileY; y++) {
-            for (int x = 0; x < GamePanel.maxTileX; x++) {
-                g2.drawImage(ImageHandler.images[groundTiles[y + TL.y][x + TL.x]],
-                        x*GamePanel.tileSize, y*GamePanel.tileSize,
-                        GamePanel.tileSize, GamePanel.tileSize,
+        for (int y = 0; y < Global.maxTileY; y++) {
+            for (int x = 0; x < Global.maxTileX; x++) {
+                g2.drawImage(ImageHandler.groundTiles[groundTiles[y + TL.y][x + TL.x]],
+                        x* Global.tileSize, y*Global.tileSize,
+                        Global.tileSize, Global.tileSize,
                         null);
             }
         }
@@ -125,24 +139,33 @@ public class World {
          */
 
         //ENTITIES
-        player.render(g2);
+        for (int y = 0; y < Global.maxTileY; y++) {
+            for (int x = 0; x < Global.maxTileX; x++) {
 
+                if (entities[y + TL.y][x + TL.x] == null) continue;
 
-        /*
-        for (int y = 1; y < 13; y++) {
-            g2.drawImage(ImageHandler.BUSH, 0,    GamePanel.tileSize*y,  GamePanel.tileSize, GamePanel.tileSize, null);
+                                //get image relating to id of current entity
+                g2.drawImage(ImageHandler.entities[entities[y + TL.y][x + TL.x].id],
+                        x*Global.tileSize, y*Global.tileSize,
+                        Global.tileSize, Global.tileSize,
+                        null);
+            }
         }
+    }
 
-        g2.drawImage(ImageHandler.BUSH, 0,    0,  GamePanel.tileSize, GamePanel.tileSize, null);
-        g2.drawImage(ImageHandler.BUSH_BERRIES, GamePanel.tileSize,   0,  GamePanel.tileSize, GamePanel.tileSize, null);
-        g2.drawImage(ImageHandler.FARM_DAMP, GamePanel.tileSize*2, 0,  GamePanel.tileSize, GamePanel.tileSize, null);
-        g2.drawImage(ImageHandler.FARM_DRY, GamePanel.tileSize*3, 0,  GamePanel.tileSize, GamePanel.tileSize, null);
-        g2.drawImage(ImageHandler.FARM_WET, GamePanel.tileSize*4, 0,  GamePanel.tileSize, GamePanel.tileSize, null);
-        g2.drawImage(ImageHandler.GRASS, 0,    GamePanel.tileSize, GamePanel.tileSize, GamePanel.tileSize, null);
-        g2.drawImage(ImageHandler.TREE_OAK, GamePanel.tileSize,   GamePanel.tileSize, GamePanel.tileSize, GamePanel.tileSize, null);
-        g2.drawImage(ImageHandler.TREE_OAK_APPLES, GamePanel.tileSize*2, GamePanel.tileSize, GamePanel.tileSize, GamePanel.tileSize, null);
-        g2.drawImage(ImageHandler.TREE_PINE, GamePanel.tileSize*3, GamePanel.tileSize, GamePanel.tileSize, GamePanel.tileSize, null);
-        g2.drawImage(ImageHandler.WATER, GamePanel.tileSize*4, GamePanel.tileSize, GamePanel.tileSize, GamePanel.tileSize, null);
-         */
+    public void addEntity(Entity e, int x, int y) {
+        if (entities[y][x] != null) return;
+        entities[y][x] = e;
+    }
+
+    //Returns false if newPos is occupied TODO fix this
+    public boolean moveEntity(Point oldPos, Point newPos) {
+        if (entities[newPos.y][newPos.x] != null) {
+            System.out.println(entities[newPos.y][newPos.x]);
+            return false;
+        }
+        entities[newPos.y][newPos.x] = entities[oldPos.y][oldPos.x];
+        entities[oldPos.y][oldPos.x] = null;
+        return true;
     }
 }

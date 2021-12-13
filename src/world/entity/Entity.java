@@ -1,26 +1,28 @@
 package world.entity;
 
-import main.GamePanel;
+import main.Global;
 import util.Direction;
 
 import java.awt.*;
 
 public abstract class Entity {
-    public int x, y; //world position in tiles
+    public Point pos;   //world position in tiles
 
-    public int lastX, lastY; //last world position in tiles
+    public Point lastPos;   //last world position in tiles
 
     public int width, height; //size in pixels
 
     public int moveTime; //number of ticks between each movement
+
+    public int id;
 
     //public Dimension dimension; //TODO add dimensions
 
     protected Direction dir;
 
     public Entity() {
-        this.width = GamePanel.tileSize;
-        this.height = GamePanel.tileSize;
+        this.width = Global.tileSize;
+        this.height = Global.tileSize;
         dir = new Direction();
     }
 
@@ -29,6 +31,10 @@ public abstract class Entity {
     }
 
     public void tick() {
+
+    }
+
+    public void update() {
 
     }
 
