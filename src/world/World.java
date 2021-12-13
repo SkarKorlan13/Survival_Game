@@ -7,28 +7,25 @@ import world.entity.Player;
 import world.tile.Tile;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
-public class World {
-
-    //public List<List<Chunk>> chunks;
+public class World implements java.io.Serializable {
 
     public int[][] groundTiles; //Grass, water, etc.
     public Tile[][] tiles;      //Trees, bushes, etc.
     public Entity[][] entities; //Player, animals, etc.
 
+    public Point playerPos = new Point();
+
     public int size;
     public long seed;
 
-    public OpenSimplexNoise noise;
+    public String saveName;
 
 
     public World(int size, long seed) {
 
         this.size = size;
         this.seed = seed;
-
-        this.noise = new OpenSimplexNoise(seed);
 
         groundTiles = new int[size][size];
         tiles = new Tile[size][size];
@@ -57,7 +54,7 @@ public class World {
     }
 
     public void generate() {
-
+        OpenSimplexNoise noise = new OpenSimplexNoise(seed);
         //GROUND TILES
 
         for (int y = 0; y < size; y++) {
@@ -156,16 +153,37 @@ public class World {
     public void addEntity(Entity e, int x, int y) {
         if (entities[y][x] != null) return;
         entities[y][x] = e;
+        if (e instanceof Player) {
+            playerPos.setLocation(x, y);
+        }
     }
 
-    //Returns false if newPos is occupied TODO fix this
+    //Returns false if newPos is occupied
     public boolean moveEntity(Point oldPos, Point newPos) {
-        if (entities[newPos.y][newPos.x] != null) {
+        if (!passable(newPos)) {
             System.out.println(entities[newPos.y][newPos.x]);
             return false;
         }
+
         entities[newPos.y][newPos.x] = entities[oldPos.y][oldPos.x];
         entities[oldPos.y][oldPos.x] = null;
+
+        if (entities[newPos.y][newPos.x] instanceof Player) {
+            playerPos.setLocation(newPos);
+        }
+
+        return true;
+    }
+
+    public boolean passable(Point pos) {
+        if (tiles[pos.y][pos.x] != null) {
+            if (!tiles[pos.y][pos.x].passable) {
+                return false;
+            }
+        }
+        if (entities[pos.y][pos.x] != null) {
+            return entities[pos.y][pos.x].passable;
+        }
         return true;
     }
 }

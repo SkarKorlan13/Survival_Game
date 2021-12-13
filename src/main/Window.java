@@ -22,20 +22,18 @@ public class Window implements Runnable{
     public static int width;
     public static int height;
 
-    public static boolean gamePaused = false;
+    //public static boolean gamePaused = false;
 
-    public static double aspectWidth = 1;
-    public static double aspectHeight = 0.5;
+    //public static double aspectWidth = 1;
+    //public static double aspectHeight = 0.5;
 
     private static int frames, ticks, fps, tps;
     private static long lastSecond, lastFrame, frameTime, tickTimeRemaining;
 
-    //public static Dimension maxSize = new Dimension(1540, 770);   //home
-    public static Dimension maxSize;// = new Dimension(1924+16, 962);  //school
-    //public static Dimension minSize;// = new Dimension();
+    public static Dimension maxSize;
 
 
-    public static boolean fullscreen=false;
+    //public static boolean fullscreen=false;
 
     public static void init(String title) {
 
@@ -58,6 +56,9 @@ public class Window implements Runnable{
         frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
+                if (Global.game != null) {
+                    Global.game.save();
+                }
                 super.windowClosing(e);
                 close = true;
             }

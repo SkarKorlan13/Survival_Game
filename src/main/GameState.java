@@ -3,7 +3,12 @@ package main;
 import world.World;
 import world.entity.Player;
 
+import javax.swing.*;
 import java.awt.*;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class GameState implements State{
 
@@ -11,29 +16,73 @@ public class GameState implements State{
 
     public World world;
 
-    public int worldSize = 32;  //Size of world in tiles, last tile is worldSize - 1 b/c starts at 0
+    public int worldSize;  //Size of world in tiles, last tile is worldSize - 1 b/c starts at 0
+
     public Rectangle worldBounds;
 
     public Point camera = new Point();  //Location of camera - usually centered on player
     public Rectangle cameraBounds;  //Area in which the camera can be without "rendering" areas outside the defined world size
 
+    //Create new game
+    public GameState(int worldSize, long worldSeed) {
+        this.worldSize = worldSize;
 
-    public GameState() {
+        init();
 
+        world = new World(worldSize, worldSeed);
+        world.addEntity(new Player(worldSize/2, worldSize/2), worldSize/2, worldSize/2);
+        updateCameraPos(world.playerPos);
+    }
+
+    public GameState(String filename) {
+        File gameFile = new File(filename);
+
+        try {
+            FileInputStream fileInputStream = new FileInputStream(gameFile);
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+
+            world = (World) objectInputStream.readObject();
+            worldSize = world.size;
+
+            init();
+
+            updateCameraPos(world.playerPos);
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     public void init() {
+        //Rectangle.contains checks if point is < bounds instead of <= so add one to width/height to make it work
         cameraBounds = new Rectangle(Global.maxTileX/2, Global.maxTileY/2,
                 worldSize - Global.maxTileX + 1, worldSize - Global.maxTileY + 1);
-        //Rectangle.contains checks if point is < bounds, not <= so add one to make it work
-
-        //System.out.println("TL: " + cameraBounds.getLocation() + " BR: " + (new Point((int) cameraBounds.getMaxX(), (int) cameraBounds.getMaxY())));
 
         worldBounds = new Rectangle(0, 0, worldSize, worldSize);
-        world = new World(worldSize, 101299);
-        Player player = new Player(worldSize/2, worldSize/2);
-        updateCameraPos(player.pos);
-        world.addEntity(player, worldSize/2, worldSize/2);
+    }
+
+    public void save() {
+        while (world.saveName == null) {
+            String name = JOptionPane.showInputDialog(Window.frame,"Save Name: ");
+            try {
+                if (!new File("saves/" + name + ".txt").createNewFile()) {
+                    JOptionPane.showMessageDialog(Window.frame,"Save name already in use","Duplicate Name", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    world.saveName = name;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream("saves/" + world.saveName + ".txt", false);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+
+            objectOutputStream.writeObject(world);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -58,7 +107,7 @@ public class GameState implements State{
         if (cameraPos.y < cameraBounds.y) {
             cameraPos.y = cameraBounds.y;
         }
-        //-1's are because of Rectangle.contains issue stated in init
+        //-1's are because of Rectangle.contains issue stated in <init>
         if (cameraPos.x > cameraBounds.getMaxX() - 1) {
             cameraPos.x = (int) cameraBounds.getMaxX() -1;
         }
@@ -66,7 +115,7 @@ public class GameState implements State{
             cameraPos.y = (int) cameraBounds.getMaxY() - 1;
         }
         if (cameraBounds.contains(cameraPos)) {
-            Global.game.camera.setLocation(cameraPos);
+            camera.setLocation(cameraPos);
             //return true;
         } else {
             System.out.println("Error Positioning Camera: " + cameraPos);

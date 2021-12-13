@@ -1,6 +1,6 @@
 package util;
 
-public class Direction {
+public class Direction implements java.io.Serializable {
     public int direction;
 
     public static final int UP = 0;

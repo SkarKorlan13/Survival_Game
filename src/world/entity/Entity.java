@@ -5,7 +5,7 @@ import util.Direction;
 
 import java.awt.*;
 
-public abstract class Entity {
+public abstract class Entity implements java.io.Serializable {
     public Point pos;   //world position in tiles
 
     public Point lastPos;   //last world position in tiles
@@ -15,6 +15,8 @@ public abstract class Entity {
     public int moveTime; //number of ticks between each movement
 
     public int id;
+
+    public boolean passable;
 
     //public Dimension dimension; //TODO add dimensions
 

@@ -27,7 +27,7 @@ public class Main{
          */
 
         //Global.setState(Global.StateType.GAME);
-        Global.setState(Global.StateType.MENU);
+        Global.setState(Global.StateType.MENU, null);
 
         Window.maxSize = new Dimension(Global.tileSize*Global.maxTileX, Global.tileSize*Global.maxTileY);
         Window.init("2D Survival Game");

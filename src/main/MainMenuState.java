@@ -28,7 +28,7 @@ public class MainMenuState implements State {
                 currentMenu = new NewGame_MenuGUI();
                 break;
             case LOAD_GAME:
-                //currentMenu = new LoadGame_MenuGUI();
+                currentMenu = new LoadGame_MenuGUI();
                 break;
             case SETTINGS:
                 //currentMenu = new Settings_MenuGUI();

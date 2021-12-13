@@ -17,6 +17,7 @@ public class Player extends Entity {
         this.pos = new Point(x, y);
         this.lastPos = new Point(pos);
 
+        this.passable = false;
         this.id = ImageHandler.PLAYER;
     }
 

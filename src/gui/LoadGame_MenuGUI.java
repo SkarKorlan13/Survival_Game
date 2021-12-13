@@ -2,6 +2,54 @@ package gui;
 
 import main.Global;
 import main.MainMenuState;
+import util.ControlHandler;
+
+import java.io.File;
+
+public class LoadGame_MenuGUI extends MenuGUI {
+
+    public LoadGame_MenuGUI() {
+        File saveFolder = new File("saves");
+        File[] listOfSaves = saveFolder.listFiles();
+
+        if (listOfSaves != null) {
+            lines = new String[listOfSaves.length+1];
+            int i = 0;
+            for (File file : listOfSaves) {
+                if (file.isFile()) {
+                    System.out.println(file.getName());
+                }
+                lines[i] = file.getPath();
+                i++;
+            }
+            lines[lines.length-1] = "Back";
+        }
+        if (lines.length == 0) {
+            lines = new String[] {
+                    "No Saves Found",
+                    "Back"
+            };
+        }
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+
+        if (ControlHandler.SELECT.pressedTick()) {
+            if (currentLine == lines.length-1) {
+                Global.menu.setCurrentMenu(MainMenuState.MenuType.MAIN);
+            } else {
+                Global.loadGame(lines[currentLine]);
+            }
+        }
+    }
+}
+
+/*
+package gui;
+
+import main.Global;
 import main.Window;
 import util.ControlHandler;
 import util.MathUtils;
@@ -23,7 +71,6 @@ public class NewGame_MenuGUI extends MenuGUI {
                 "World Size: " + worldSize,
                 "World Seed: " + worldSeed,
                 "Create New World",
-                "Back"
         };
     }
 
@@ -56,8 +103,9 @@ public class NewGame_MenuGUI extends MenuGUI {
                     }
                 }
                 case 2 -> Global.createNewGame(worldSize, worldSeed);
-                case 3 -> Global.menu.setCurrentMenu(MainMenuState.MenuType.MAIN);
             }
         }
     }
 }
+
+ */

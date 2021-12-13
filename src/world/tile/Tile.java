@@ -1,23 +1,26 @@
 package world.tile;
 
 @SuppressWarnings("StaticInitializerReferencesSubClass")
-public abstract class Tile {
+public abstract class Tile implements java.io.Serializable {
     public static final int TILE_MAX = 256;
     public static final Tile[] TILES = new Tile[TILE_MAX];
 
-    public static final TileTree_Oak TREE_OAK = new TileTree_Oak(2);
-    public static final TileTree_Oak_Apples TREE_OAK_APPLES = new TileTree_Oak_Apples(3);
-    public static final TileTree_Pine TREE_PINE = new TileTree_Pine(4);
-    public static final TileBush BUSH = new TileBush(5);
-    public static final TileBush_Berries BUSH_BERRIES = new TileBush_Berries(6);
+    public static final TileTree_Oak TREE_OAK = new TileTree_Oak(2, false);
+    public static final TileTree_Oak_Apples TREE_OAK_APPLES = new TileTree_Oak_Apples(3, false);
+    public static final TileTree_Pine TREE_PINE = new TileTree_Pine(4, false);
+    public static final TileBush BUSH = new TileBush(5, false);
+    public static final TileBush_Berries BUSH_BERRIES = new TileBush_Berries(6, false);
 
     //public int x;
     //public int y;
 
     public final int id;
 
-    public Tile(int id) {
+    public boolean passable;
+
+    public Tile(int id, boolean passable) {
         this.id = id;
+        this.passable = passable;
         assert(Tile.TILES[this.id] == null);
         Tile.TILES[this.id] = this;
     }

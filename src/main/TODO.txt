@@ -21,3 +21,5 @@ add tile interactions etc.
 world
     add world gen of tiles (trees etc.)
     add map
+
+add dimensions
