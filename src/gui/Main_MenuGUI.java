@@ -4,7 +4,7 @@ import main.Global;
 import main.MainMenuState;
 import util.ControlHandler;
 
-public class Main_MenuGUI extends MenuGUI{
+public class Main_MenuGUI extends MenuGUI implements GUI {
 
     public Main_MenuGUI() {
         lines = new String[] {

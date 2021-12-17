@@ -1,6 +1,9 @@
 package main;
 
-import gui.*;
+import gui.LoadGame_MenuGUI;
+import gui.Main_MenuGUI;
+import gui.MenuGUI;
+import gui.NewGame_MenuGUI;
 
 import java.awt.*;
 

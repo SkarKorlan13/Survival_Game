@@ -2,25 +2,28 @@ package world.entity;
 
 import main.Global;
 import util.Direction;
+import world.WorldObject;
 
 import java.awt.*;
 
-public abstract class Entity implements java.io.Serializable {
-    public Point pos;   //world position in tiles
+public abstract class Entity extends WorldObject implements java.io.Serializable {
+    protected Point pos;   //world position in tiles
 
-    public Point lastPos;   //last world position in tiles
+    protected Point lastPos;   //last world position in tiles
 
-    public int width, height; //size in pixels
+    protected int width, height; //size in pixels
 
-    public int moveTime; //number of ticks between each movement
+    protected int moveTime; //number of ticks between each movement
 
     public int id;
-
-    public boolean passable;
 
     //public Dimension dimension; //TODO add dimensions
 
     protected Direction dir;
+
+    public Inventory inventory;
+
+    public Tool currentTool;
 
     public Entity() {
         this.width = Global.tileSize;
@@ -42,5 +45,9 @@ public abstract class Entity implements java.io.Serializable {
 
     public void render(Graphics2D g2) {
 
+    }
+
+    public Tool getCurrentTool() {
+        return currentTool == null ? new Tool_Hand() : currentTool;
     }
 }

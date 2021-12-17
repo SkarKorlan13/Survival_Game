@@ -37,6 +37,8 @@ public class Window implements Runnable{
 
     public static void init(String title) {
 
+        maxSize = new Dimension(Global.tileSize*Global.maxTileX, Global.tileSize*Global.maxTileY);
+
         lastFrame = Time.now();
         lastSecond = Time.now();
 
@@ -48,7 +50,7 @@ public class Window implements Runnable{
         //frame.setPreferredSize(minSize);
         //frame.setSize(minSize);
         frame.setResizable(true);
-        frame.setIconImage(ImageHandler.entities[ImageHandler.PLAYER]);
+        frame.setIconImage(ImageHandler.tiles_entities[ImageHandler.PLAYER]);
 
         //frame.setState(JFrame.MAXIMIZED_BOTH);
         //frame.setUndecorated(true);
@@ -56,9 +58,11 @@ public class Window implements Runnable{
         frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
+                /*
                 if (Global.game != null) {
                     Global.game.save();
                 }
+                 */
                 super.windowClosing(e);
                 close = true;
             }

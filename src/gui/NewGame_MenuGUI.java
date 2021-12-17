@@ -8,17 +8,17 @@ import util.MathUtils;
 
 import javax.swing.*;
 
-public class NewGame_MenuGUI extends MenuGUI {
+public class NewGame_MenuGUI extends MenuGUI implements GUI {
 
     int minWorldSize = Math.max(Global.maxTileX, Global.maxTileY);
     int worldSize = minWorldSize;
     long worldSeed;
 
     public NewGame_MenuGUI() {
-        update();
+        updateLines();
     }
 
-    public void update() {
+    public void updateLines() {
         lines = new String[] {
                 "World Size: " + worldSize,
                 "World Seed: " + worldSeed,
@@ -38,7 +38,7 @@ public class NewGame_MenuGUI extends MenuGUI {
                     if (MathUtils.isNumber(size, Integer.MAX_VALUE)) {
                         if (Integer.parseInt(size) >= minWorldSize) {
                             worldSize = Integer.parseInt(size);
-                            update();
+                            updateLines();
                         } else {
                             JOptionPane.showMessageDialog(Window.frame,"Please enter a number between " + minWorldSize + " and " + Integer.MAX_VALUE,"Incorrect Input", JOptionPane.WARNING_MESSAGE);
                         }
@@ -50,7 +50,7 @@ public class NewGame_MenuGUI extends MenuGUI {
                     String seed = JOptionPane.showInputDialog(Window.frame, "World Seed: ");
                     if (MathUtils.isNumber(seed, Long.MAX_VALUE)) {
                         worldSeed = Long.parseLong(seed);
-                        update();
+                        updateLines();
                     } else {
                         JOptionPane.showMessageDialog(Window.frame,"Please enter a number between 0 and " + Long.MAX_VALUE,"Incorrect Input", JOptionPane.WARNING_MESSAGE);
                     }
@@ -58,6 +58,10 @@ public class NewGame_MenuGUI extends MenuGUI {
                 case 2 -> Global.createNewGame(worldSize, worldSeed);
                 case 3 -> Global.menu.setCurrentMenu(MainMenuState.MenuType.MAIN);
             }
+        }
+
+        if (ControlHandler.BACK.pressedTick()) {
+            Global.menu.setCurrentMenu(MainMenuState.MenuType.MAIN);
         }
     }
 }

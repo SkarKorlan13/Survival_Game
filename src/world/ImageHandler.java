@@ -9,23 +9,26 @@ import java.io.IOException;
 public class ImageHandler {
 
     public static BufferedImage[] groundTiles;
-    public static BufferedImage[] tiles;
-    public static BufferedImage[] entities;
+    public static BufferedImage[] tiles_entities;
 
     //public static BufferedImage ICON; TODO
 
-    public static int PLAYER=0;
-
+    //GROUND TILES
     public static int GRASS=0;
     public static int WATER=1;
-    public static int TREE_OAK=2;
-    public static int TREE_OAK_APPLES=3;
-    public static int TREE_PINE=4;
-    public static int BUSH=5;
-    public static int BUSH_BERRIES=6;
-    public static int FARM_WET=7;
-    public static int FARM_DAMP=8;
-    public static int FARM_DRY=9;
+    public static int FARM_WET=2;
+    public static int FARM_DAMP=3;
+    public static int FARM_DRY=4;
+
+    //ENTITIES
+    public static int PLAYER=0;
+
+    //TILES
+    public static int TREE_OAK=1;
+    public static int TREE_OAK_APPLES=2;
+    public static int TREE_PINE=3;
+    public static int BUSH=4;
+    public static int BUSH_BERRIES=5;
 
     static {
         try {
@@ -39,19 +42,14 @@ public class ImageHandler {
                     ImageIO.read(in = new FileInputStream("res/tile/Farm_Dry.png")),
             };
 
-            tiles = new BufferedImage[] {
+            tiles_entities = new BufferedImage[] {
+                    ImageIO.read(in = new FileInputStream("res/entity/Player.png")),
                     ImageIO.read(in = new FileInputStream("res/tile/Tree_Oak.png")),
                     ImageIO.read(in = new FileInputStream("res/tile/Tree_Oak_Apples.png")),
                     ImageIO.read(in = new FileInputStream("res/tile/Tree_Pine.png")),
                     ImageIO.read(in = new FileInputStream("res/tile/Bush.png")),
                     ImageIO.read(in = new FileInputStream("res/tile/Bush_Berries.png")),
             };
-
-            entities = new BufferedImage[] {
-                    ImageIO.read(in = new FileInputStream("res/entity/Player.png")),
-            };
-
-
 
             in.close();
 

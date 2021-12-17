@@ -1,13 +1,15 @@
 package gui;
 
+import main.Global;
+import util.ControlHandler;
+
 import java.awt.*;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 public class GameGUIHandler {
 
-    public static List<GameGUI> active = new ArrayList<>();
-    public static List<GameGUI> all = new ArrayList<>();
+    public static List<GUI> active = new ArrayList<>();
 
     /*
     Pause Menu
@@ -16,19 +18,34 @@ public class GameGUIHandler {
     ...
      */
 
+    public static PauseGUI pauseGUI = new PauseGUI();
+
     public GameGUIHandler() {
 
     }
 
     public void render(Graphics2D g2) {
-        for (GameGUI gui : active) {
-            gui.render(g2);
+        for (int i = 0; i < active.size(); i++) {
+            active.get(i).render(g2);
         }
     }
 
     public void tick() {
-        for (GameGUI gui : active) {
-            gui.tick();
+        if (ControlHandler.ESC.pressedTick()) {
+            if (!Global.game.gamePaused) {
+                //Will be different once inventories etc. added
+                Global.game.gamePaused = true;
+            }
+        }
+
+        if (Global.game.gamePaused && !active.contains(pauseGUI)) {
+            active.add(pauseGUI);
+        } else if (!Global.game.gamePaused) {
+            active.remove(pauseGUI);
+        }
+
+        for (int i = 0; i < active.size(); i++) {
+            active.get(i).tick();
         }
     }
 }

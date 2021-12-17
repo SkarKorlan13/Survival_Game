@@ -1,5 +1,7 @@
 package util;
 
+import java.awt.*;
+
 public class Direction implements java.io.Serializable {
     public int direction;
 
@@ -35,5 +37,16 @@ public class Direction implements java.io.Serializable {
 
     public void flipX() {
         this.direction = getFlippedX();
+    }
+
+    public Point getFacing() {
+        Point facing = new Point();
+        switch (direction) {
+            case 0 -> facing.y = 1;
+            case 1 -> facing.x = 1;
+            case 2 -> facing.y = -1;
+            case 3 -> facing.x = -1;
+        }
+        return facing;
     }
 }

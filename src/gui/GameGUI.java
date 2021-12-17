@@ -1,21 +1,23 @@
 package gui;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.List;
 
-public class GameGUI {
+public class GameGUI implements GUI {
 
-    public List<BufferedImage> elements = new ArrayList<>();    //Elements of GUI to be rendered
+    public Rectangle dimensions; //Size of GUI
 
-    public Dimension dimension; //Size of GUI
+    public int priority;    //Order in which to render GUI's, from low to high (higher numbers rendered last)
 
-    public void render(Graphics2D g2) {
+    public GameGUI() {
 
     }
 
     public void tick() {
+
+    }
+
+    @Override
+    public void render(Graphics2D g2) {
 
     }
 }

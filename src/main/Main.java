@@ -1,7 +1,5 @@
 package main;
 
-import java.awt.*;
-
 public class Main{
 
     public static void main(String[] args) {
@@ -29,7 +27,6 @@ public class Main{
         //Global.setState(Global.StateType.GAME);
         Global.setState(Global.StateType.MENU, null);
 
-        Window.maxSize = new Dimension(Global.tileSize*Global.maxTileX, Global.tileSize*Global.maxTileY);
         Window.init("2D Survival Game");
 
         new Thread(new Window()).start();

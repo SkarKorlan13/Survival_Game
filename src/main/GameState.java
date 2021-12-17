@@ -1,18 +1,16 @@
 package main;
 
+import gui.GameGUIHandler;
 import world.World;
 import world.entity.Player;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class GameState implements State{
 
-    //public GUIHandler guiHandler;
+    public GameGUIHandler guiHandler = new GameGUIHandler();
 
     public World world;
 
@@ -23,6 +21,8 @@ public class GameState implements State{
     public Point camera = new Point();  //Location of camera - usually centered on player
     public Rectangle cameraBounds;  //Area in which the camera can be without "rendering" areas outside the defined world size
 
+    public boolean gamePaused = false;
+
     //Create new game
     public GameState(int worldSize, long worldSeed) {
         this.worldSize = worldSize;
@@ -30,7 +30,8 @@ public class GameState implements State{
         init();
 
         world = new World(worldSize, worldSeed);
-        world.addEntity(new Player(worldSize/2, worldSize/2), worldSize/2, worldSize/2);
+        Point pos = new Point(worldSize/2, worldSize/2);
+        world.addEntity(new Player(pos), pos);
         updateCameraPos(world.playerPos);
     }
 
@@ -47,6 +48,8 @@ public class GameState implements State{
             init();
 
             updateCameraPos(world.playerPos);
+
+            fileInputStream.close();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -87,7 +90,10 @@ public class GameState implements State{
 
     @Override
     public void tick() {
-        world.tick();
+        if (!gamePaused) {
+            world.tick();
+        }
+        guiHandler.tick();
     }
 
     @Override
@@ -98,6 +104,7 @@ public class GameState implements State{
     @Override
     public void render(Graphics2D g2) {
         world.render(g2);
+        guiHandler.render(g2);
     }
 
     public void updateCameraPos(Point cameraPos) {

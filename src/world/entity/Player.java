@@ -3,6 +3,7 @@ package world.entity;
 import main.Global;
 import util.ControlHandler;
 import world.ImageHandler;
+import world.tile.Tile_Water;
 
 import java.awt.*;
 
@@ -11,13 +12,12 @@ public class Player extends Entity {
     private int moveTicks = 0;
     private boolean isMove = false;
 
-    public Player(int x, int y) {
+    public Player(Point pos) {
         super();
         this.moveTime = 20;
-        this.pos = new Point(x, y);
+        this.pos = new Point(pos);
         this.lastPos = new Point(pos);
 
-        this.passable = false;
         this.id = ImageHandler.PLAYER;
     }
 
@@ -91,6 +91,15 @@ public class Player extends Entity {
             }
         }
 
+        //INTERACT
+        if (ControlHandler.INTERACT.pressedTick()) {
+            Point facing = new Point(pos);
+            Point dirFacing = dir.getFacing();
+            facing.translate(dirFacing.x, dirFacing.y);
+            System.out.println(facing);
+            Global.game.world.interact(facing, this);
+        }
+
         //OTHER
     }
 
@@ -102,6 +111,11 @@ public class Player extends Entity {
 
         //g2.fillRect(x*Window.tileSize, y*Window.tileSize, width, height);
 
-        g2.drawImage(ImageHandler.entities[this.id], Global.tileSize*(Global.maxTileX/2), Global.tileSize*(Global.maxTileY/2), Global.tileSize, Global.tileSize, null);
+        g2.drawImage(ImageHandler.tiles_entities[this.id], Global.tileSize*(Global.maxTileX/2), Global.tileSize*(Global.maxTileY/2), Global.tileSize, Global.tileSize, null);
+    }
+
+    @Override
+    public void interact(Entity e) {
+        //MAYBE SOMETHING LATER
     }
 }

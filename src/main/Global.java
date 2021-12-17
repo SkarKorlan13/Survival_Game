@@ -1,11 +1,9 @@
 package main;
 
 import util.Time;
-import world.tile.TileBush;
 
 import javax.swing.*;
 import java.io.File;
-import java.io.FileNotFoundException;
 
 public class Global {
     public enum StateType {

@@ -5,7 +5,7 @@ import util.ControlHandler;
 
 import java.awt.*;
 
-public class MenuGUI {
+public class MenuGUI implements GUI {
 
     public Font font = new Font("Monospaced", Font.PLAIN, 60);
 
@@ -15,6 +15,7 @@ public class MenuGUI {
 
     public int currentLine;
 
+    @Override
     public void tick() {
         if (ControlHandler.UP.pressedTick()) {
             currentLine--;
@@ -31,6 +32,7 @@ public class MenuGUI {
         }
     }
 
+    @Override
     public void render(Graphics2D g2) {
         g2.setFont(font);
         g2.setColor(Color.WHITE);

@@ -4,15 +4,14 @@ import main.Global;
 import util.OpenSimplexNoise;
 import world.entity.Entity;
 import world.entity.Player;
-import world.tile.Tile;
+import world.tile.*;
 
 import java.awt.*;
 
 public class World implements java.io.Serializable {
 
-    public int[][] groundTiles; //Grass, water, etc.
-    public Tile[][] tiles;      //Trees, bushes, etc.
-    public Entity[][] entities; //Player, animals, etc.
+    public WorldObject[][] groundTiles;     //Grass, water, etc.
+    public WorldObject[][] tiles_entities;  //Trees, bushes, entities, etc.
 
     public Point playerPos = new Point();
 
@@ -27,9 +26,8 @@ public class World implements java.io.Serializable {
         this.size = size;
         this.seed = seed;
 
-        groundTiles = new int[size][size];
-        tiles = new Tile[size][size];
-        entities = new Entity[size][size];
+        groundTiles = new WorldObject[size][size];
+        tiles_entities = new WorldObject[size][size];
 
         generate();
 
@@ -61,12 +59,14 @@ public class World implements java.io.Serializable {
             for (int x = 0; x < size; x++) {
                 double eval = noise.eval((double)x/10, (double)y/10);
                 if (eval < -0.5) {
-                    groundTiles[y][x] = 1;
+                    groundTiles[y][x] = new Tile_Water();
                 } else {
-                    groundTiles[y][x] = 0;
+                    groundTiles[y][x] = new Tile_Grass();
                 }
             }
         }
+
+        groundTiles[size/2][size/2] = new Tile_Water();
 
         //TILES
         /*
@@ -84,20 +84,23 @@ public class World implements java.io.Serializable {
     }
 
     public void tick() {
-
-        for (Entity[] y : entities) {
-            for (Entity e : y) {
-                if (e == null) continue;
-                e.tick();
+        for (WorldObject[] y : tiles_entities) {
+            for (WorldObject w : y) {
+                if (w == null) continue;
+                if (w instanceof Entity) {
+                    ((Entity) w).tick();
+                }
             }
         }
     }
 
     public void update() {
-        for (Entity[] y : entities) {
-            for (Entity e : y) {
-                if (e == null) return;
-                e.update();
+        for (WorldObject[] y : tiles_entities) {
+            for (WorldObject w : y) {
+                if (w == null) continue;
+                if (w instanceof Entity) {
+                    ((Entity) w).update();
+                }
             }
         }
     }
@@ -115,7 +118,11 @@ public class World implements java.io.Serializable {
         //GROUND TILES
         for (int y = 0; y < Global.maxTileY; y++) {
             for (int x = 0; x < Global.maxTileX; x++) {
-                g2.drawImage(ImageHandler.groundTiles[groundTiles[y + TL.y][x + TL.x]],
+                if (groundTiles[y + TL.y][x + TL.x] instanceof Tile_Water) {
+                    //System.out.println("water" + groundTiles[y + TL.y][x + TL.x].id);
+                    //TODO this stuff isn't working, only rendering grass, wrong id's, etc.
+                }
+                g2.drawImage(ImageHandler.groundTiles[groundTiles[y + TL.y][x + TL.x].id],
                         x* Global.tileSize, y*Global.tileSize,
                         Global.tileSize, Global.tileSize,
                         null);
@@ -123,26 +130,11 @@ public class World implements java.io.Serializable {
         }
 
 
-        //TILES
-        /*
-        for (int y = 0; y < GamePanel.maxTileY; y++) {
-            for (int x = 0; x < GamePanel.maxTileX; x++) {
-                g2.drawImage(ImageHandler.images[tiles[y + TL.y][x + TL.x].id],
-                        x*GamePanel.tileSize, y*GamePanel.tileSize,
-                        GamePanel.tileSize, GamePanel.tileSize,
-                        null);
-            }
-        }
-         */
-
-        //ENTITIES
+        //TILES/ENTITIES
         for (int y = 0; y < Global.maxTileY; y++) {
             for (int x = 0; x < Global.maxTileX; x++) {
-
-                if (entities[y + TL.y][x + TL.x] == null) continue;
-
-                                //get image relating to id of current entity
-                g2.drawImage(ImageHandler.entities[entities[y + TL.y][x + TL.x].id],
+                if (tiles_entities[y + TL.y][x + TL.x] == null) continue;
+                g2.drawImage(ImageHandler.tiles_entities[tiles_entities[y + TL.y][x + TL.x].id],
                         x*Global.tileSize, y*Global.tileSize,
                         Global.tileSize, Global.tileSize,
                         null);
@@ -150,25 +142,32 @@ public class World implements java.io.Serializable {
         }
     }
 
-    public void addEntity(Entity e, int x, int y) {
-        if (entities[y][x] != null) return;
-        entities[y][x] = e;
+    public boolean addEntity(Entity e, Point pos) {
+        if (tiles_entities[pos.y][pos.x] != null) return false;
+        tiles_entities[pos.y][pos.x] = e;
         if (e instanceof Player) {
-            playerPos.setLocation(x, y);
+            playerPos.setLocation(pos.x, pos.y);
         }
+        return true;
     }
+
+    public boolean forceAddEntity(Entity e, Point pos) {
+        tiles_entities[pos.y][pos.x] = null;
+        return addEntity(e, pos);
+    }
+
 
     //Returns false if newPos is occupied
     public boolean moveEntity(Point oldPos, Point newPos) {
         if (!passable(newPos)) {
-            System.out.println(entities[newPos.y][newPos.x]);
+            System.out.println(tiles_entities[newPos.y][newPos.x]);
             return false;
         }
 
-        entities[newPos.y][newPos.x] = entities[oldPos.y][oldPos.x];
-        entities[oldPos.y][oldPos.x] = null;
+        tiles_entities[newPos.y][newPos.x] = tiles_entities[oldPos.y][oldPos.x];
+        tiles_entities[oldPos.y][oldPos.x] = null;
 
-        if (entities[newPos.y][newPos.x] instanceof Player) {
+        if (tiles_entities[newPos.y][newPos.x] instanceof Player) {
             playerPos.setLocation(newPos);
         }
 
@@ -176,14 +175,14 @@ public class World implements java.io.Serializable {
     }
 
     public boolean passable(Point pos) {
-        if (tiles[pos.y][pos.x] != null) {
-            if (!tiles[pos.y][pos.x].passable) {
-                return false;
-            }
+        return tiles_entities[pos.y][pos.x] == null;
+    }
+
+    public void interact(Point pos, Entity e) {
+        if (tiles_entities[pos.y][pos.x] != null) {
+            tiles_entities[pos.y][pos.x].interact(e);
+        } else if (groundTiles[pos.y][pos.x] != null) {
+            groundTiles[pos.y][pos.x].interact(e);
         }
-        if (entities[pos.y][pos.x] != null) {
-            return entities[pos.y][pos.x].passable;
-        }
-        return true;
     }
 }
