@@ -1,5 +1,11 @@
 /----------TODO----------/
 
+FIRST:
+    change all .id to .getID()
+
+
+consolidate rendering
+    change image handling to fit
 
 Simplify all graphics to colored boxes until further developed
 

@@ -9,6 +9,7 @@ public class Tile_Tree_Oak_Apples extends Tile{
 
     @Override
     public void interact(Entity e) {
+        super.interact(e);
 
     }
 }

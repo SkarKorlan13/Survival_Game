@@ -26,10 +26,8 @@ public class LoadGame_MenuGUI extends MenuGUI implements GUI {
                 i++;
             }
             lines[lines.length-1] = "Back";
-        }
-        if (lines.length == 0) {
+        } else {
             lines = new String[] {
-                    "No Saves Found",
                     "Back"
             };
         }

@@ -96,7 +96,7 @@ public class Player extends Entity {
             Point facing = new Point(pos);
             Point dirFacing = dir.getFacing();
             facing.translate(dirFacing.x, dirFacing.y);
-            System.out.println(facing);
+            //System.out.println(facing);
             Global.game.world.interact(facing, this);
         }
 

@@ -161,4 +161,8 @@ public class Window implements Runnable{
     private void render() {
         gamePanel.repaint();
     }
+
+    public static void close() {
+        frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+    }
 }
