@@ -5,8 +5,8 @@ import world.entity.Tool;
 
 public class Tile_Grass extends Tile {
 
-    public Tile_Grass(int id) {
-        this.id = id;
+    public Tile_Grass() {
+        this.id = 0;
     }
 
     @Override

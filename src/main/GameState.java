@@ -31,7 +31,7 @@ public class GameState implements State{
 
         world = new World(worldSize, worldSeed);
         Point pos = new Point(worldSize/2, worldSize/2);
-        world.addEntity(new Player(pos), pos);
+        System.out.println("Player: " + world.forceAddEntity(new Player(pos), pos));
         updateCameraPos(world.playerPos);
     }
 

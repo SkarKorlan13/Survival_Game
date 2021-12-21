@@ -4,8 +4,8 @@ import world.entity.Entity;
 
 public class Tile_Water extends Tile {
 
-    public Tile_Water(int id) {
-        this.id = id;
+    public Tile_Water() {
+        this.id = 1;
     }
 
     @Override

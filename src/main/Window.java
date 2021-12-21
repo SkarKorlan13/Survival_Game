@@ -6,10 +6,7 @@ import world.ImageHandler;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 
 public class Window implements Runnable{
 
@@ -93,6 +90,35 @@ public class Window implements Runnable{
         gamePanel.setSize(maxSize);
         gamePanel.setBackground(Color.BLACK);
         gamePanel.addKeyListener(Keyboard.getListener());
+        gamePanel.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                System.out.println(e.getPoint() + " | " + MouseInfo.getPointerInfo().getLocation());
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
+
+        PointerInfo pointerInfo = MouseInfo.getPointerInfo();
+        System.out.println(pointerInfo.getLocation());
         gamePanel.setFocusable(true);
 
         frame.add(gamePanel);

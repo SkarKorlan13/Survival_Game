@@ -7,6 +7,7 @@ import world.entity.Player;
 import world.tile.*;
 
 import java.awt.*;
+import java.util.Random;
 
 public class World implements java.io.Serializable {
 
@@ -54,6 +55,7 @@ public class World implements java.io.Serializable {
 
     public void generate() {
         OpenSimplexNoise noise = new OpenSimplexNoise(seed);
+        Random random = new Random(seed);
         //GROUND TILES
 
         for (int y = 0; y < size; y++) {
@@ -63,30 +65,37 @@ public class World implements java.io.Serializable {
                 Tile tile;
 
                 if (eval < -0.5) {
-                    tile = new Tile_Water(1);
+                    tile = new Tile_Water();
                 } else {
-                    tile = new Tile_Grass(0);
+                    tile = new Tile_Grass();
                 }
 
                 layers[0][y][x] = tile;
+
+                System.out.println(tile.getID());
             }
         }
 
-        layers[0][size/2][size/2] = new Tile_Water(1);
-
         //TILES
-        /*
         for (int y = 0; y < size; y++) {
             for (int x = 0; x < size; x++) {
+                if (layers[0][y][x] instanceof Tile_Water) continue;
+
                 double eval = noise.eval((double)x/10, (double)y/10);
-                if (eval < -0.5) {
-                    tiles[y][x] = Tile.TILES[0];
+
+                Tile tile;
+
+                if (eval > 0.5) {
+                    tile = random.nextInt(16) < 1 ? new Tile_Tree_Oak_Apples() : new Tile_Tree_Oak();
                 } else {
-                    tiles[y][x] = 0;
+                    tile = random.nextInt(16) < 1 ? new Tile_Bush() : null;
+                }
+
+                if (tile != null) {
+                    layers[1][y][x] = tile;
                 }
             }
         }
-         */
     }
 
     public void tick() {
@@ -124,9 +133,9 @@ public class World implements java.io.Serializable {
         //GROUND TILES
         for (int y = 0; y < Global.maxTileY; y++) {
             for (int x = 0; x < Global.maxTileX; x++) {
-                Tile currentTile = (Tile) layers[0][y + TL.y][x + TL.x];
+                if (layers[0][y + TL.y][x + TL.x] == null) continue;
 
-                g2.drawImage(ImageHandler.groundTiles[currentTile.getID()],
+                g2.drawImage(ImageHandler.groundTiles[layers[0][y + TL.y][x + TL.x].getID()],
                         x* Global.tileSize, y*Global.tileSize,
                         Global.tileSize, Global.tileSize,
                         null);
@@ -138,7 +147,8 @@ public class World implements java.io.Serializable {
         for (int y = 0; y < Global.maxTileY; y++) {
             for (int x = 0; x < Global.maxTileX; x++) {
                 if (layers[1][y + TL.y][x + TL.x] == null) continue;
-                g2.drawImage(ImageHandler.tiles_entities[layers[1][y + TL.y][x + TL.x].id],
+
+                g2.drawImage(ImageHandler.tiles_entities[layers[1][y + TL.y][x + TL.x].getID()],
                         x*Global.tileSize, y*Global.tileSize,
                         Global.tileSize, Global.tileSize,
                         null);
@@ -188,5 +198,9 @@ public class World implements java.io.Serializable {
         } else if (layers[0][pos.y][pos.x] != null) {
             layers[0][pos.y][pos.x].interact(e);
         }
+    }
+
+    public WorldObject getWorldObject(int layer, Point pos) {
+        return layers[layer][pos.y][pos.x];
     }
 }

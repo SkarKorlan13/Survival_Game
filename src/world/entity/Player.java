@@ -71,15 +71,20 @@ public class Player extends Entity {
 
             if (!(newPos.x == pos.x && newPos.y == pos.y)) {    //TODO Fix this massive mess
                 if (Global.game.worldBounds.contains(newPos)) {
-                    System.out.println("Move");
-                    lastPos.setLocation(pos);
-                    pos.setLocation(newPos);
 
-                    if (!Global.game.world.moveEntity(lastPos, pos)) {
+                    if (Global.game.world.moveEntity(pos, newPos)) {
+                        System.out.println("Move " + moveTicks);
+                        lastPos.setLocation(pos);
+                        pos.setLocation(newPos);
+                        Global.game.updateCameraPos(newPos);
+
+                        if (Global.game.world.getWorldObject(0, pos) instanceof Tile_Water) {
+                            moveTicks -= moveTime;
+                        }
+                    } else {
                         System.out.println("Player Move Failed");
                     }
 
-                    Global.game.updateCameraPos(newPos);
                 } else {
                     System.out.println("No Move");
                 }
@@ -91,7 +96,7 @@ public class Player extends Entity {
             }
         }
 
-        //INTERACT
+        //----------------INTERACT----------------//
         if (ControlHandler.INTERACT.pressedTick()) {
             Point facing = new Point(pos);
             Point dirFacing = dir.getFacing();
