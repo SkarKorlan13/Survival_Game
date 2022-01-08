@@ -30,9 +30,7 @@ public class GameState implements State{
         init();
 
         world = new World(worldSize, worldSeed);
-        Point pos = new Point(worldSize/2, worldSize/2);
-        System.out.println("Player: " + world.forceAddEntity(new Player(pos), pos));
-        updateCameraPos(world.playerPos);
+        updateCameraPos(world.getPlayerPos());
     }
 
     public GameState(String filename) {
@@ -47,7 +45,7 @@ public class GameState implements State{
 
             init();
 
-            updateCameraPos(world.playerPos);
+            updateCameraPos(world.getPlayerPos());
 
             fileInputStream.close();
         } catch (IOException | ClassNotFoundException e) {

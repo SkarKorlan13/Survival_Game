@@ -1,4 +1,4 @@
-package world.entity;
+package world.item;
 
 public class Tool {
     public enum ToolType {

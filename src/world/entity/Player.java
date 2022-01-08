@@ -3,27 +3,21 @@ package world.entity;
 import main.Global;
 import util.ControlHandler;
 import world.ImageHandler;
-import world.tile.Tile_Water;
 
 import java.awt.*;
 
 public class Player extends Entity {
 
-    private int moveTicks = 0;
     private boolean isMove = false;
 
-    public Player(Point pos) {
+    public Player() {
         super();
         this.moveTime = 20;
-        this.pos = new Point(pos);
-        this.lastPos = new Point(pos);
-
         this.id = ImageHandler.PLAYER;
     }
 
     @Override
     public void tick() {
-        super.tick();
 
         //----------------MOVE----------------//
 
@@ -55,7 +49,9 @@ public class Player extends Entity {
             } else if (dir.direction == 1 && ControlHandler.RIGHT.down()) {
                 newPos.x++;
                 isMove = false;
-            } else if (ControlHandler.UP.down()) {
+            }
+            /*
+            else if (ControlHandler.UP.down()) {
                 newPos.y--;
                 isMove = false;
             } else if (ControlHandler.DOWN.down()) {
@@ -68,55 +64,42 @@ public class Player extends Entity {
                 newPos.x++;
                 isMove = false;
             }
+             */
 
-            if (!(newPos.x == pos.x && newPos.y == pos.y)) {    //TODO Fix this massive mess
+            if (!(newPos.equals(pos))) {
                 if (Global.game.worldBounds.contains(newPos)) {
-
-                    if (Global.game.world.moveEntity(pos, newPos)) {
-                        System.out.println("Move " + moveTicks);
-                        lastPos.setLocation(pos);
-                        pos.setLocation(newPos);
-                        Global.game.updateCameraPos(newPos);
-
-                        if (Global.game.world.getWorldObject(0, pos) instanceof Tile_Water) {
-                            moveTicks -= moveTime;
-                        }
-                    } else {
-                        System.out.println("Player Move Failed");
-                    }
-
+                    super.move(newPos);
                 } else {
-                    System.out.println("No Move");
+                    System.out.println("Edge of World");
                 }
-
-
-                //if (Global.game.worldSize - pos.x < Global.maxTileX/2)
-                //Global.game.worldSize - newPos.x <= Global.maxTileX/2 || Global.game.worldSize - newPos.y <= Global.maxTileY/2
-                //updateCameraPos();
             }
         }
 
         //----------------INTERACT----------------//
         if (ControlHandler.INTERACT.pressedTick()) {
-            Point facing = new Point(pos);
-            Point dirFacing = dir.getFacing();
-            facing.translate(dirFacing.x, dirFacing.y);
-            //System.out.println(facing);
-            Global.game.world.interact(facing, this);
+            Global.game.world.interact(getFacing(), this);
         }
 
         //OTHER
     }
 
     @Override
-    public void render(Graphics2D g2) {
-        super.render(g2);
+    public void update() {
 
-        //g2.setColor(Color.WHITE);
+    }
 
-        //g2.fillRect(x*Window.tileSize, y*Window.tileSize, width, height);
+    @Override
+    public void render(Graphics2D g2, Point pos) {
+        super.render(g2, pos);
 
-        g2.drawImage(ImageHandler.tiles_entities[this.id], Global.tileSize*(Global.maxTileX/2), Global.tileSize*(Global.maxTileY/2), Global.tileSize, Global.tileSize, null);
+        //Selected tile box
+        /*
+        Point facing = dir.getFacing();
+        facing.translate(x, y);
+        g2.setColor(Color.WHITE);
+        g2.drawRect(facing.x * Global.tileSize, facing.y * Global.tileSize, Global.tileSize, Global.tileSize);
+         */
+        //g2.drawRect(facing.x, facing.y, (int) (Global.tileSize*.9), (int) (Global.tileSize*.9));
     }
 
     @Override

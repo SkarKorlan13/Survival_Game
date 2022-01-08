@@ -1,11 +1,12 @@
 package world.tile;
 
+import world.ImageHandler;
 import world.entity.Entity;
 
 public class Tile_Water extends Tile {
 
     public Tile_Water() {
-        this.id = 1;
+        super(ImageHandler.WATER);
     }
 
     @Override

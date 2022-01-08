@@ -4,14 +4,23 @@ import world.WorldObject;
 import world.entity.Entity;
 
 public abstract class Tile extends WorldObject implements java.io.Serializable {
-    protected int id;
 
-    public void interact(Entity e) {
-        System.out.println(id);
+    protected int health;
+
+    protected int progress;
+
+    protected int[][] drops;
+
+    public Tile(int id) {
+        this.id = id;
     }
 
-    @Override
-    public int getID() {
-        return id;
+    public void interact(Entity e) {
+        System.out.println("id: " + id + " | tool: " + e.getCurrentTool().toolType);
+        System.out.println(state);
+    }
+
+    public void setState(int state) {
+        this.state = state;
     }
 }

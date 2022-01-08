@@ -1,11 +1,12 @@
 package world.tile;
 
+import world.ImageHandler;
 import world.entity.Entity;
 
-public class Tile_Tree_Oak_Apples extends Tile{
+public class Tile_Farm extends Tile {
 
-    public Tile_Tree_Oak_Apples() {
-        this.id = 2;
+    public Tile_Farm() {
+        super(ImageHandler.FARM_DRY);
     }
 
     @Override

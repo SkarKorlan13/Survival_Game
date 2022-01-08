@@ -6,4 +6,14 @@ public class Human extends Entity {
     public void interact(Entity e) {
 
     }
+
+    @Override
+    public void tick() {
+
+    }
+
+    @Override
+    public void update() {
+
+    }
 }

@@ -17,7 +17,7 @@ public class Global {
 
     public static int tileSize = 48;
 
-    public static int maxTileX = 25; //24 + 1 for player in middle
+    public static int maxTileX = 19; //24 + 1 for player in middle
     public static int maxTileY = 13; //12 + 1 for player in middle
 
     public static void setState(StateType state, State gameState) {

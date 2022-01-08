@@ -5,21 +5,27 @@ import util.OpenSimplexNoise;
 import world.entity.Entity;
 import world.entity.Player;
 import world.tile.*;
+import world.tile.Tile_Tree_Oak;
 
 import java.awt.*;
 import java.util.Random;
 
 public class World implements java.io.Serializable {
 
-    public WorldObject[][][] layers;
+    //public WorldObject[][][] layers;
+    private int[][][] layers; //holds worldIDs of each worldObject, 0 meaning empty, 1 meaning player
     //0: Ground Tiles
     //1: Tiles and Entities
-    //2: Flying things etc.
 
-    public Point playerPos = new Point();
+    public static final int GROUND_TILES = 0;
+    public static final int TILES_ENTITIES = 1;
+
+    private WorldObject[] worldObjects; //each worldID corresponds to the index of a worldObject in this array
 
     public int size;
-    public long seed;
+    private long seed;
+
+    private int nextIndex=1; //
 
     public String saveName;
 
@@ -29,7 +35,9 @@ public class World implements java.io.Serializable {
         this.size = size;
         this.seed = seed;
 
-        layers = new WorldObject[3][size][size];
+        //layers = new WorldObject[3][size][size];
+        layers = new int[3][size][size];
+        worldObjects = new WorldObject[3 * size * size];
 
         generate();
 
@@ -56,11 +64,13 @@ public class World implements java.io.Serializable {
     public void generate() {
         OpenSimplexNoise noise = new OpenSimplexNoise(seed);
         Random random = new Random(seed);
-        //GROUND TILES
 
-        for (int y = 0; y < size; y++) {
-            for (int x = 0; x < size; x++) {
-                double eval = noise.eval((double)x/10, (double)y/10);
+        Point pos = new Point();
+
+        //GROUND TILES
+        for (pos.y = 0; pos.y < size; pos.y++) {
+            for (pos.x = 0; pos.x < size; pos.x++) {
+                double eval = noise.eval(pos.getX()/10, pos.getY()/10);
 
                 Tile tile;
 
@@ -70,52 +80,58 @@ public class World implements java.io.Serializable {
                     tile = new Tile_Grass();
                 }
 
-                layers[0][y][x] = tile;
-
-                System.out.println(tile.getID());
+                add(tile, pos, GROUND_TILES);
             }
         }
 
         //TILES
-        for (int y = 0; y < size; y++) {
-            for (int x = 0; x < size; x++) {
-                if (layers[0][y][x] instanceof Tile_Water) continue;
+        for (pos.y = 0; pos.y < size; pos.y++) {
+            for (pos.x = 0; pos.x < size; pos.x++) {
+                if (get(GROUND_TILES, pos) instanceof Tile_Water) continue;
 
-                double eval = noise.eval((double)x/10, (double)y/10);
+                double eval = noise.eval(pos.getX()/10, pos.getY()/10);
 
                 Tile tile;
 
                 if (eval > 0.5) {
-                    tile = random.nextInt(16) < 1 ? new Tile_Tree_Oak_Apples() : new Tile_Tree_Oak();
+                    tile = new Tile_Tree_Oak();
+                    if (random.nextInt(16) < 1) {
+                        tile.setState(1);
+                    }
+                } else if (random.nextInt(16) < 1) {
+                    tile = new Tile_Bush();
+                    if (random.nextInt(4) < 1) {
+                        tile.setState(1);
+                    }
                 } else {
-                    tile = random.nextInt(16) < 1 ? new Tile_Bush() : null;
+                    tile = null;
                 }
 
                 if (tile != null) {
-                    layers[1][y][x] = tile;
+                    add(tile, pos, TILES_ENTITIES);
+                } else {
+                    setWorldID(1, pos, 0);
                 }
             }
         }
+
+        add(new Player(), new Point(size/2, size/2), TILES_ENTITIES, 1);
     }
 
     public void tick() {
-        for (WorldObject[] y : layers[1]) {
-            for (WorldObject w : y) {
-                if (w == null) continue;
-                if (w instanceof Entity) {
-                    ((Entity) w).tick();
-                }
+        for (int i = 0; i < nextIndex; i++) {
+            if (worldObjects[i] == null) continue;
+            if (worldObjects[i] instanceof Entity) {
+                ((Entity) worldObjects[i]).tick();
             }
         }
     }
 
     public void update() {
-        for (WorldObject[] y : layers[1]) {
-            for (WorldObject w : y) {
-                if (w == null) continue;
-                if (w instanceof Entity) {
-                    ((Entity) w).update();
-                }
+        for (int i = 0; i < nextIndex; i++) {
+            if (worldObjects[i] == null) continue;
+            if (worldObjects[i] instanceof Entity) {
+                ((Entity) worldObjects[i]).update();
             }
         }
     }
@@ -130,77 +146,97 @@ public class World implements java.io.Serializable {
         //BR.x = TL.x + Global.maxTileX;
         //BR.y = TL.y + Global.maxTileY;
 
-        //GROUND TILES
-        for (int y = 0; y < Global.maxTileY; y++) {
-            for (int x = 0; x < Global.maxTileX; x++) {
-                if (layers[0][y + TL.y][x + TL.x] == null) continue;
+        Point tempPos = new Point();
 
-                g2.drawImage(ImageHandler.groundTiles[layers[0][y + TL.y][x + TL.x].getID()],
-                        x* Global.tileSize, y*Global.tileSize,
-                        Global.tileSize, Global.tileSize,
-                        null);
-            }
-        }
+        for (int layer = 0; layer < layers.length; layer++) {
+            for (tempPos.y = 0; tempPos.y < Global.maxTileY; tempPos.y++) {
+                for (tempPos.x = 0; tempPos.x < Global.maxTileX; tempPos.x++) {
+                    if (getWorldID(layer, new Point(tempPos.x + TL.x, tempPos.y + TL.y)) == 0) continue;
 
-
-        //TILES/ENTITIES
-        for (int y = 0; y < Global.maxTileY; y++) {
-            for (int x = 0; x < Global.maxTileX; x++) {
-                if (layers[1][y + TL.y][x + TL.x] == null) continue;
-
-                g2.drawImage(ImageHandler.tiles_entities[layers[1][y + TL.y][x + TL.x].getID()],
-                        x*Global.tileSize, y*Global.tileSize,
-                        Global.tileSize, Global.tileSize,
-                        null);
+                    get(layer, new Point(tempPos.x + TL.x, tempPos.y + TL.y)).render(g2, tempPos);
+                }
             }
         }
     }
 
-    public boolean addEntity(Entity e, Point pos) {
-        if (layers[1][pos.y][pos.x] != null) return false;
-        layers[1][pos.y][pos.x] = e;
-        if (e instanceof Player) {
-            playerPos.setLocation(pos.x, pos.y);
-        }
-        return true;
+    public void remove(Point pos, int layer) {
+        if (getWorldID(layer, pos) == 0) return;
+        worldObjects[getWorldID(layer, pos)] = null;
+        setWorldID(layer, pos, 0);
     }
 
-    public boolean forceAddEntity(Entity e, Point pos) {
-        layers[1][pos.y][pos.x] = null;
-        return addEntity(e, pos);
+    public void add(WorldObject w, Point pos, int layer, int id) {
+        if (getWorldID(layer, pos) != 0) return;
+        w.setWorldID(id);
+        w.setPos(pos);
+        worldObjects[id] = w;
+        setWorldID(layer, pos, id);
     }
 
+    public void add(WorldObject w, Point pos, int layer) {
+        add(w, pos, layer, nextIndex);
+        nextIndex++;
+    }
 
     //Returns false if newPos is occupied
-    public boolean moveEntity(Point oldPos, Point newPos) {
-        if (!passable(newPos)) {
-            System.out.println(layers[1][newPos.y][newPos.x]);
+    public boolean move(Point oldPos, Point newPos) {
+        if (!empty(newPos, TILES_ENTITIES)) {
+            System.out.println(get(1, newPos));
             return false;
         }
 
-        layers[1][newPos.y][newPos.x] = layers[1][oldPos.y][oldPos.x];
-        layers[1][oldPos.y][oldPos.x] = null;
-
-        if (layers[1][newPos.y][newPos.x] instanceof Player) {
-            playerPos.setLocation(newPos);
-        }
+        setWorldID(TILES_ENTITIES, newPos, getWorldID(TILES_ENTITIES, oldPos));
+        setWorldID(TILES_ENTITIES, oldPos, 0);
 
         return true;
     }
 
-    public boolean passable(Point pos) {
-        return layers[1][pos.y][pos.x] == null;
+    //returns true if empty
+    public boolean empty(Point pos, int layer) {
+        return getWorldID(layer, pos) == 0;
     }
 
     public void interact(Point pos, Entity e) {
-        if (layers[1][pos.y][pos.x] != null) {
-            layers[1][pos.y][pos.x].interact(e);
-        } else if (layers[0][pos.y][pos.x] != null) {
-            layers[0][pos.y][pos.x].interact(e);
+        WorldObject w;
+        for (int i = layers.length-1; i >= 0; i--) {
+            if ((w = get(i, pos)) != null) {
+                w.interact(e);
+                return;
+            }
         }
     }
 
-    public WorldObject getWorldObject(int layer, Point pos) {
+    public WorldObject get(int layer, Point pos) {
+        int id = getWorldID(layer, pos);
+        if (id == 0) {
+            return null;
+        } else {
+            return worldObjects[id];
+        }
+    }
+
+    public Point getPos(int layer, int worldID) {
+        Point pos = new Point();
+        for (pos.y = 0; pos.y < size; pos.y++) {
+            for (pos.x = 0; pos.x < size; pos.x++) {
+                if (getWorldID(layer, pos) == worldID) {
+                    return pos;
+                }
+            }
+        }
+        //worldID not found in layers
+        return new Point(-1, -1);
+    }
+
+    public int getWorldID(int layer, Point pos) {
         return layers[layer][pos.y][pos.x];
+    }
+
+    public void setWorldID(int layer, Point pos, int id) {
+        layers[layer][pos.y][pos.x] = id;
+    }
+
+    public Point getPlayerPos() {
+        return worldObjects[1].getPos();
     }
 }

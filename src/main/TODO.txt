@@ -1,13 +1,7 @@
 /----------TODO----------/
 
-FIRST:
-    change all .id to .getID()
 
-
-consolidate rendering
-    change image handling to fit
-
-Simplify all graphics to colored boxes until further developed
+Fix random player image in top left of map
 
 add tiles/fix that whole mess
     plan out how tile rendering/ticking/interactions will work
@@ -18,8 +12,10 @@ Mouse controls?
 
 add tile interactions etc.
 
+add complex tile interactions (more than 1 type)
+
 world
-    add world gen of tiles (trees etc.)
+    add better world gen of tiles (trees etc.)
     add map
 
 add dimensions or multiple elevation levels
