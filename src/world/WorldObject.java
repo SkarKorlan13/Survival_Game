@@ -5,7 +5,7 @@ import world.entity.Entity;
 
 import java.awt.*;
 
-public abstract class WorldObject {
+public abstract class WorldObject implements java.io.Serializable {
 
     protected int id;
 
