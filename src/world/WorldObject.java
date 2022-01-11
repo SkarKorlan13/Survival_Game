@@ -19,7 +19,7 @@ public abstract class WorldObject implements java.io.Serializable {
     public abstract void interact(Entity e);
 
     public void render(Graphics2D g2, Point pos) {
-        g2.drawImage(ImageHandler.tiles_entities[id], pos.x * Global.tileSize, pos.y * Global.tileSize, Global.tileSize, Global.tileSize, null);
+        g2.drawImage(ImageHandler.tiles_entities[getStateID()], pos.x * Global.tileSize, pos.y * Global.tileSize, Global.tileSize, Global.tileSize, null);
     }
 
     public int getID() {

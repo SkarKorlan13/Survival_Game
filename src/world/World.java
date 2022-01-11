@@ -25,7 +25,7 @@ public class World implements java.io.Serializable {
     public int size;
     private long seed;
 
-    private int nextIndex=1; //
+    private int nextIndex=2; //
 
     public String saveName;
 
@@ -109,13 +109,16 @@ public class World implements java.io.Serializable {
 
                 if (tile != null) {
                     add(tile, pos, TILES_ENTITIES);
-                } else {
-                    setWorldID(1, pos, 0);
                 }
             }
         }
 
+        //ENTITIES
+        remove(new Point(size/2, size/2), TILES_ENTITIES);
         add(new Player(), new Point(size/2, size/2), TILES_ENTITIES, 1);
+
+        //System.out.println("#" + get(GROUND_TILES, new Point(0, 0)).getStateID());
+        //System.out.println("##" + get(GROUND_TILES, new Point(1, 0)).getStateID());
     }
 
     public void tick() {
@@ -137,7 +140,6 @@ public class World implements java.io.Serializable {
     }
 
     public void render(Graphics2D g2) {
-
 
         Point TL = new Point(); //Top Left
         //Point BR = new Point(); //Bottom Right
@@ -166,6 +168,7 @@ public class World implements java.io.Serializable {
     }
 
     public void add(WorldObject w, Point pos, int layer, int id) {
+        //System.out.println("w: " + w + "  pos: " + pos + "  layer: " + layer + "  int: " + id);
         if (getWorldID(layer, pos) != 0) return;
         w.setWorldID(id);
         w.setPos(pos);

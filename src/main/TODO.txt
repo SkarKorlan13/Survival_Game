@@ -1,26 +1,27 @@
 /----------TODO----------/
 
 
-Fix random player image in top left of map
-
-add tiles/fix that whole mess
-    plan out how tile rendering/ticking/interactions will work
-    progress bars?
-    GUIs linked to tiles?
-
 Mouse controls?
 
 add tile interactions etc.
 
 add complex tile interactions (more than 1 type)
 
-world
+world:
     add better world gen of tiles (trees etc.)
     add map
+    tiles:
+        plan out how tile rendering/ticking/interactions will work
+        progress bars?
+        GUIs linked to tiles?
 
 add dimensions or multiple elevation levels
 
 add icon
+
+
+
+
 
 font possibilities:
     Courier New
