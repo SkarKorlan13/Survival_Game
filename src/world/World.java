@@ -15,10 +15,12 @@ public class World implements java.io.Serializable {
     //public WorldObject[][][] layers;
     private int[][][] layers; //holds worldIDs of each worldObject, 0 meaning empty, 1 meaning player
     //0: Ground Tiles
-    //1: Tiles and Entities
+    //1: Tiles
+    //2: Entities
 
     public static final int GROUND_TILES = 0;
-    public static final int TILES_ENTITIES = 1;
+    public static final int TILES = 1;
+    public static final int ENTITIES = 2;
 
     private WorldObject[] worldObjects; //each worldID corresponds to the index of a worldObject in this array
 
@@ -108,14 +110,13 @@ public class World implements java.io.Serializable {
                 }
 
                 if (tile != null) {
-                    add(tile, pos, TILES_ENTITIES);
+                    add(tile, pos, TILES);
                 }
             }
         }
 
         //ENTITIES
-        remove(new Point(size/2, size/2), TILES_ENTITIES);
-        add(new Player(), new Point(size/2, size/2), TILES_ENTITIES, 1);
+        add(new Player(), new Point(size/2, size/2), ENTITIES, 1);
 
         //System.out.println("#" + get(GROUND_TILES, new Point(0, 0)).getStateID());
         //System.out.println("##" + get(GROUND_TILES, new Point(1, 0)).getStateID());
@@ -169,11 +170,15 @@ public class World implements java.io.Serializable {
 
     public void add(WorldObject w, Point pos, int layer, int id) {
         //System.out.println("w: " + w + "  pos: " + pos + "  layer: " + layer + "  int: " + id);
-        if (getWorldID(layer, pos) != 0) return;
-        w.setWorldID(id);
-        w.setPos(pos);
-        worldObjects[id] = w;
-        setWorldID(layer, pos, id);
+        if (getWorldID(layer, pos) != 0) {
+            remove(pos, layer);
+        }
+        if (layer == ENTITIES && !get(TILES, pos).isPassable()) {
+            w.setWorldID(id);
+            w.setPos(pos);
+            worldObjects[id] = w;
+            setWorldID(layer, pos, id);
+        }
     }
 
     public void add(WorldObject w, Point pos, int layer) {
@@ -181,15 +186,15 @@ public class World implements java.io.Serializable {
         nextIndex++;
     }
 
-    //Returns false if newPos is occupied
+    //Returns false if newPos is not passable
     public boolean move(Point oldPos, Point newPos) {
-        if (!empty(newPos, TILES_ENTITIES)) {
+        if (!(get(TILES, newPos).isPassable() && empty(newPos, ENTITIES))) {
             System.out.println(get(1, newPos));
             return false;
         }
 
-        setWorldID(TILES_ENTITIES, newPos, getWorldID(TILES_ENTITIES, oldPos));
-        setWorldID(TILES_ENTITIES, oldPos, 0);
+        setWorldID(ENTITIES, newPos, getWorldID(ENTITIES, oldPos));
+        setWorldID(ENTITIES, oldPos, 0);
 
         return true;
     }
@@ -200,10 +205,9 @@ public class World implements java.io.Serializable {
     }
 
     public void interact(Point pos, Entity e) {
-        WorldObject w;
         for (int i = layers.length-1; i >= 0; i--) {
-            if ((w = get(i, pos)) != null) {
-                w.interact(e);
+            if (getWorldID(i, pos) != 0) {
+                get(i, pos).interact(e);
                 return;
             }
         }
@@ -218,6 +222,7 @@ public class World implements java.io.Serializable {
         }
     }
 
+    //probably unnecessary
     public Point getPos(int layer, int worldID) {
         Point pos = new Point();
         for (pos.y = 0; pos.y < size; pos.y++) {

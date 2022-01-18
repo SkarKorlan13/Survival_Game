@@ -42,10 +42,10 @@ public class Direction implements java.io.Serializable {
     public Point getFacing() {
         Point facing = new Point();
         switch (direction) {
-            case 0 -> facing.y = 1;
-            case 1 -> facing.x = 1;
-            case 2 -> facing.y = -1;
-            case 3 -> facing.x = -1;
+            case UP -> facing.y = -1;
+            case RIGHT -> facing.x = 1;
+            case DOWN -> facing.y = 1;
+            case LEFT -> facing.x = -1;
         }
         return facing;
     }

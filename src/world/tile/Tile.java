@@ -11,8 +11,9 @@ public abstract class Tile extends WorldObject implements java.io.Serializable {
 
     protected int[][] drops;
 
-    public Tile(int id) {
+    public Tile(int id, boolean passable) {
         this.id = id;
+        this.passable = passable;
     }
 
     public void interact(Entity e) {

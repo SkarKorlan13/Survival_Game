@@ -8,7 +8,7 @@ import world.item.Tool;
 public class Tile_Tree_Oak extends Tile {
 
     public Tile_Tree_Oak() {
-        super(ImageHandler.TREE_OAK);
+        super(ImageHandler.TREE_OAK, false);
         this.health = 20;
     }
 

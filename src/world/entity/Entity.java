@@ -29,6 +29,7 @@ public abstract class Entity extends WorldObject implements java.io.Serializable
     protected Tool currentTool;
 
     public Entity() {
+        this.passable = false;
         this.width = Global.tileSize;
         this.height = Global.tileSize;
         this.lastPos = new Point();

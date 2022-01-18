@@ -1,11 +1,16 @@
-/----------TODO----------/
+/----------URGENT--------/
 
+Fix world
+    Passable tiles -> player and tile on same spot
+        Tiles layer and Entities layer
+        OR
+        Passable layer and Impassable layer
 
-Mouse controls?
+/----------OTHER---------/
 
-add tile interactions etc.
+add specific tile interactions etc.
 
-add complex tile interactions (more than 1 type)
+add complex tile interactions (not just destroy)
 
 world:
     add better world gen of tiles (trees etc.)
@@ -19,15 +24,15 @@ add dimensions or multiple elevation levels
 
 add icon
 
+Mouse controls?
 
 
 
 
 font possibilities:
-    Courier New
-    DialogInput
-    Monospaced
+    Alagard
+    Romulus
 
 current font choice:
-    Monospaced
+    Alagard
 

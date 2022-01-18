@@ -2,6 +2,7 @@ package world.entity;
 
 import main.Global;
 import util.ControlHandler;
+import util.Direction;
 import world.ImageHandler;
 
 import java.awt.*;
@@ -28,25 +29,25 @@ public class Player extends Entity {
         }
 
         //UPDATE DIRECTION
-        if (ControlHandler.UP.pressedTick()) dir.direction = 0;
-        else if (ControlHandler.DOWN.pressedTick()) dir.direction = 2;
-        else if (ControlHandler.LEFT.pressedTick()) dir.direction = 3;
-        else if (ControlHandler.RIGHT.pressedTick()) dir.direction = 1;
+        if (ControlHandler.UP.pressedTick()) dir.direction = Direction.UP;
+        else if (ControlHandler.DOWN.pressedTick()) dir.direction = Direction.DOWN;
+        else if (ControlHandler.LEFT.pressedTick()) dir.direction = Direction.LEFT;
+        else if (ControlHandler.RIGHT.pressedTick()) dir.direction = Direction.RIGHT;
 
         //UPDATE POSITION
         if (isMove) {
             Point newPos = new Point(pos);
 
-            if (dir.direction == 0 && ControlHandler.UP.down()) {
+            if (dir.direction == Direction.UP && ControlHandler.UP.down()) {
                 newPos.y--;
                 isMove = false;
-            } else if (dir.direction == 2 && ControlHandler.DOWN.down()) {
+            } else if (dir.direction == Direction.DOWN && ControlHandler.DOWN.down()) {
                 newPos.y++;
                 isMove = false;
-            } else if (dir.direction == 3 && ControlHandler.LEFT.down()) {
+            } else if (dir.direction == Direction.LEFT && ControlHandler.LEFT.down()) {
                 newPos.x--;
                 isMove = false;
-            } else if (dir.direction == 1 && ControlHandler.RIGHT.down()) {
+            } else if (dir.direction == Direction.RIGHT && ControlHandler.RIGHT.down()) {
                 newPos.x++;
                 isMove = false;
             }
@@ -92,13 +93,10 @@ public class Player extends Entity {
     public void render(Graphics2D g2, Point pos) {
         super.render(g2, pos);
 
-        //Selected tile box
-        /*
         Point facing = dir.getFacing();
-        facing.translate(x, y);
+        facing.translate(pos.x, pos.y);
         g2.setColor(Color.WHITE);
         g2.drawRect(facing.x * Global.tileSize, facing.y * Global.tileSize, Global.tileSize, Global.tileSize);
-         */
         //g2.drawRect(facing.x, facing.y, (int) (Global.tileSize*.9), (int) (Global.tileSize*.9));
     }
 

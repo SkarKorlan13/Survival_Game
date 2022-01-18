@@ -7,7 +7,7 @@ import java.awt.*;
 
 public class MenuGUI implements GUI {
 
-    public Font font = new Font("Monospaced", Font.PLAIN, 60);
+    public Font font = new Font("Alagard", Font.PLAIN, 60);
 
     RenderingHints rh = new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 

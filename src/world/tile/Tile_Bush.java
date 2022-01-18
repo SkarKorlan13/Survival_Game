@@ -6,7 +6,7 @@ import world.entity.Entity;
 public class Tile_Bush extends Tile {
 
     public Tile_Bush() {
-        super(ImageHandler.BUSH);
+        super(ImageHandler.BUSH, false);
     }
 
     @Override
