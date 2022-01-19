@@ -173,12 +173,15 @@ public class World implements java.io.Serializable {
         if (getWorldID(layer, pos) != 0) {
             remove(pos, layer);
         }
-        if (layer == ENTITIES && !get(TILES, pos).isPassable()) {
-            w.setWorldID(id);
-            w.setPos(pos);
-            worldObjects[id] = w;
-            setWorldID(layer, pos, id);
+
+        if (!passable(pos)) {
+            remove(pos, TILES);
         }
+
+        w.setWorldID(id);
+        w.setPos(pos);
+        worldObjects[id] = w;
+        setWorldID(layer, pos, id);
     }
 
     public void add(WorldObject w, Point pos, int layer) {
@@ -186,9 +189,17 @@ public class World implements java.io.Serializable {
         nextIndex++;
     }
 
+    public boolean passable(Point pos) {
+        if (getWorldID(TILES, pos) == 0) {
+            return true;
+        } else {
+            return ((Tile) get(TILES, pos)).isPassable();
+        }
+    }
+
     //Returns false if newPos is not passable
     public boolean move(Point oldPos, Point newPos) {
-        if (!(get(TILES, newPos).isPassable() && empty(newPos, ENTITIES))) {
+        if (!(passable(newPos) && empty(newPos, ENTITIES))) {
             System.out.println(get(1, newPos));
             return false;
         }

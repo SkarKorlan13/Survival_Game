@@ -13,8 +13,6 @@ public abstract class WorldObject implements java.io.Serializable {
 
     protected Point pos;
 
-    protected boolean passable;
-
     //0 being default state
     protected int state = 0;
 
@@ -50,9 +48,5 @@ public abstract class WorldObject implements java.io.Serializable {
 
     public void setPos(Point pos) {
         this.pos = new Point(pos);
-    }
-
-    public boolean isPassable() {
-        return passable;
     }
 }

@@ -7,6 +7,8 @@ public abstract class Tile extends WorldObject implements java.io.Serializable {
 
     protected int health;
 
+    protected boolean passable;
+
     protected int progress;
 
     protected int[][] drops;
@@ -23,5 +25,9 @@ public abstract class Tile extends WorldObject implements java.io.Serializable {
 
     public void setState(int state) {
         this.state = state;
+    }
+
+    public boolean isPassable() {
+        return passable;
     }
 }
