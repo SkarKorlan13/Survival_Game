@@ -18,7 +18,9 @@ public class GameGUIHandler {
     ...
      */
 
-    public static PauseGUI pauseGUI = new PauseGUI();
+    private static PauseGUI pauseGUI = new PauseGUI();
+
+    //private static MainGUI mainGUI = new MainGUI();
 
     public GameGUIHandler() {
 
@@ -32,10 +34,8 @@ public class GameGUIHandler {
 
     public void tick() {
         if (ControlHandler.ESC.pressedTick()) {
-            if (!Global.game.gamePaused) {
-                //Will be different once inventories etc. added
-                Global.game.gamePaused = true;
-            }
+            //Will be different once inventories etc. added
+            Global.game.gamePaused = !Global.game.gamePaused;
         }
 
         if (Global.game.gamePaused && !active.contains(pauseGUI)) {

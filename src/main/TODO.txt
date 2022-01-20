@@ -1,10 +1,6 @@
 /----------URGENT--------/
 
-Fix world
-    Passable tiles -> player and tile on same spot
-        Tiles layer and Entities layer
-        OR
-        Passable layer and Impassable layer
+fix menu switching - index staying 0?
 
 /----------OTHER---------/
 

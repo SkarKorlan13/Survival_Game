@@ -56,12 +56,12 @@ public class NewGame_MenuGUI extends MenuGUI implements GUI {
                     }
                 }
                 case 2 -> Global.createNewGame(worldSize, worldSeed);
-                case 3 -> Global.menu.setCurrentMenu(MainMenuState.MenuType.MAIN);
+                case 3 -> Global.menu.previousMenu();
             }
         }
 
         if (ControlHandler.BACK.pressedTick()) {
-            Global.menu.setCurrentMenu(MainMenuState.MenuType.MAIN);
+            Global.menu.previousMenu();
         }
     }
 }

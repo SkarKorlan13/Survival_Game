@@ -23,7 +23,19 @@ public class PauseGUI extends MenuGUI implements GUI {
 
     @Override
     public void tick() {
-        super.tick();
+        if (ControlHandler.UP.pressedTick()) {
+            currentLine--;
+            if (currentLine < 0) {
+                currentLine = 0;
+            }
+        }
+
+        if (ControlHandler.DOWN.pressedTick()) {
+            currentLine++;
+            if (currentLine >= lines.length) {
+                currentLine = lines.length-1;
+            }
+        }
 
         if (ControlHandler.BACK.pressedTick()) {
             Global.game.gamePaused = false;
@@ -33,10 +45,10 @@ public class PauseGUI extends MenuGUI implements GUI {
             switch (currentLine) {
                 case 0 -> Global.game.save();
                 case 1 -> {
-                    int i = JOptionPane.showConfirmDialog(Window.frame,"Save Game?", "Save Game", JOptionPane.YES_NO_OPTION);
-                    if (i == JOptionPane.YES_OPTION) {
-                        Global.game.save();
-                    }
+                    //int i = JOptionPane.showConfirmDialog(Window.frame,"Save Game?", "Save Game", JOptionPane.YES_NO_OPTION);
+                    //if (i == JOptionPane.YES_OPTION) {
+                    //    Global.game.save();
+                    //}
                     Global.setState(Global.StateType.MENU, null);
                 }
                 case 2 -> Global.game.gamePaused = false;
@@ -50,9 +62,9 @@ public class PauseGUI extends MenuGUI implements GUI {
         g2.setColor(Color.BLACK);
         g2.fillRect(dim.x, dim.y, dim.width, dim.height);
 
-        g2.setFont(font);
+        g2.setFont(Global.font);
         g2.setColor(Color.WHITE);
-        g2.setRenderingHints(rh);
+        //g2.setRenderingHints(rh);
 
         for (int i = 0; i < lines.length; i++) {
             String line = lines[i];
@@ -62,8 +74,8 @@ public class PauseGUI extends MenuGUI implements GUI {
             }
 
             g2.drawString(line,
-                    (int) (((Global.maxTileX * Global.tileSize) / 2) - font.getStringBounds(line, g2.getFontRenderContext()).getCenterX()),
-                    font.getSize() * i + font.getSize() + dim.y);
+                    (int) (((Global.maxTileX * Global.tileSize) / 2) - Global.font.getStringBounds(line, g2.getFontRenderContext()).getCenterX()),
+                    Global.font.getSize() * i + Global.font.getSize() + dim.y);
         }
     }
 }

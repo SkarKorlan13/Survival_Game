@@ -7,9 +7,9 @@ import java.awt.*;
 
 public class MenuGUI implements GUI {
 
-    public Font font = new Font("Alagard", Font.PLAIN, 60);
 
-    RenderingHints rh = new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+    //RenderingHints rh = new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
     public String[] lines;
 
@@ -30,13 +30,17 @@ public class MenuGUI implements GUI {
                 currentLine = lines.length-1;
             }
         }
+
+        if (ControlHandler.BACK.pressedTick()) {
+            Global.menu.previousMenu();
+        }
     }
 
     @Override
     public void render(Graphics2D g2) {
-        g2.setFont(font);
+        g2.setFont(Global.font);
         g2.setColor(Color.WHITE);
-        g2.setRenderingHints(rh);
+        //g2.setRenderingHints(rh);
 
         for (int i = 0; i < lines.length; i++) {
             String line = lines[i];
@@ -46,8 +50,8 @@ public class MenuGUI implements GUI {
             }
 
             g2.drawString(line,
-                    (int) (((Global.maxTileX * Global.tileSize) / 2) - font.getStringBounds(line, g2.getFontRenderContext()).getCenterX()),
-                    font.getSize() * i + font.getSize());
+                    (int) (((Global.maxTileX * Global.tileSize) / 2) - Global.font.getStringBounds(line, g2.getFontRenderContext()).getCenterX()),
+                    Global.font.getSize() * i + Global.font.getSize());
         }
     }
 

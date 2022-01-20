@@ -117,8 +117,11 @@ public class Window implements Runnable{
             }
         });
 
+        /*
         PointerInfo pointerInfo = MouseInfo.getPointerInfo();
         System.out.println(pointerInfo.getLocation());
+         */
+
         gamePanel.setFocusable(true);
 
         frame.add(gamePanel);

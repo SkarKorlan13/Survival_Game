@@ -3,6 +3,7 @@ package main;
 import util.Time;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 
 public class Global {
@@ -14,6 +15,8 @@ public class Global {
     public static GameState game;
     public static MainMenuState menu;
     public static State currentState;
+
+    public static Font font = new Font("Alagard", Font.PLAIN, 60);
 
     public static int tileSize = 48;
 

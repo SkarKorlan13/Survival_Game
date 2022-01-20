@@ -16,10 +16,15 @@ public class MainMenuState implements State {
         SETTINGS
     }
 
-    public MenuGUI currentMenu;
+    private MenuType[] currentMenus;
+
+    private int index=0;
+
+    private MenuGUI currentMenu;
 
     public MainMenuState() {
-        currentMenu = new Main_MenuGUI();    //Default to main menu
+        currentMenus = new MenuType[MenuType.values().length];
+        setCurrentMenu(MenuType.MAIN);    //Default to main menu
     }
 
     public void setCurrentMenu(MenuType menu) {
@@ -39,9 +44,26 @@ public class MainMenuState implements State {
         }
     }
 
+    public void addCurrentMenu(MenuType menu) {
+        setCurrentMenu(menu);
+        currentMenus[index] = menu;
+        index++;
+    }
+
+    public void previousMenu() {
+        if (index == 0) {
+            return; //Can't go back from main menu
+        }
+
+        currentMenus[index] = null;
+        setCurrentMenu(currentMenus[index-1]);
+        index--;
+    }
+
     @Override
     public void tick() {
         currentMenu.tick();
+        System.out.println(index);
     }
 
     @Override
