@@ -16,12 +16,18 @@ public class Global {
     public static MainMenuState menu;
     public static State currentState;
 
-    public static Font font = new Font("Alagard", Font.PLAIN, 60);
+    public static Font getFont() {
+        return getFont(60);
+    }
+
+    public static Font getFont(int size) {
+        return new Font("Alagard", Font.PLAIN, size);
+    }
 
     public static int tileSize = 48;
 
-    public static int maxTileX = 19; //24 + 1 for player in middle
-    public static int maxTileY = 13; //12 + 1 for player in middle
+    public static int maxTileX = 23; //24 + 1 for player in middle
+    public static int maxTileY = 15; //12 + 1 for player in middle
 
     public static void setState(StateType state, State gameState) {
         Global.currentStateType = state;

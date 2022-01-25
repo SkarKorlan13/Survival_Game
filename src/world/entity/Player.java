@@ -29,13 +29,26 @@ public class Player extends Entity {
         }
 
         //UPDATE DIRECTION
-        if (ControlHandler.UP.pressedTick()) dir.direction = Direction.UP;
-        else if (ControlHandler.DOWN.pressedTick()) dir.direction = Direction.DOWN;
-        else if (ControlHandler.LEFT.pressedTick()) dir.direction = Direction.LEFT;
-        else if (ControlHandler.RIGHT.pressedTick()) dir.direction = Direction.RIGHT;
+        if (ControlHandler.UP.pressedTick() && dir.direction != Direction.UP) {
+            dir.direction = Direction.UP;
+            isMove = false;
+            moveTicks = moveTime / 2;
+        } else if (ControlHandler.DOWN.pressedTick() && dir.direction != Direction.DOWN) {
+            dir.direction = Direction.DOWN;
+            isMove = false;
+            moveTicks = moveTime / 2;
+        } else if (ControlHandler.LEFT.pressedTick() && dir.direction != Direction.LEFT) {
+            dir.direction = Direction.LEFT;
+            isMove = false;
+            moveTicks = moveTime / 2;
+        } else if (ControlHandler.RIGHT.pressedTick() && dir.direction != Direction.RIGHT) {
+            dir.direction = Direction.RIGHT;
+            isMove = false;
+            moveTicks = moveTime / 2;
+        }
 
         //UPDATE POSITION
-        if (isMove) {
+        else if (isMove) {
             Point newPos = new Point(pos);
 
             if (dir.direction == Direction.UP && ControlHandler.UP.down()) {
@@ -51,21 +64,6 @@ public class Player extends Entity {
                 newPos.x++;
                 isMove = false;
             }
-            /*
-            else if (ControlHandler.UP.down()) {
-                newPos.y--;
-                isMove = false;
-            } else if (ControlHandler.DOWN.down()) {
-                newPos.y++;
-                isMove = false;
-            } else if (ControlHandler.LEFT.down()) {
-                newPos.x--;
-                isMove = false;
-            } else if (ControlHandler.RIGHT.down()) {
-                newPos.x++;
-                isMove = false;
-            }
-             */
 
             if (!(newPos.equals(pos))) {
                 if (Global.game.worldBounds.contains(newPos)) {
@@ -75,6 +73,8 @@ public class Player extends Entity {
                 }
             }
         }
+
+        System.out.println("moveTicks: " + moveTicks + " | isMove: " + isMove);
 
         //----------------INTERACT----------------//
         if (ControlHandler.INTERACT.pressedTick()) {

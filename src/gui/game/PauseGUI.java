@@ -60,7 +60,7 @@ public class PauseGUI implements GUI {
         g2.setColor(Color.BLACK);
         g2.fillRect(dim.x, dim.y, dim.width, dim.height);
 
-        g2.setFont(Global.font);
+        g2.setFont(Global.getFont());
         g2.setColor(Color.WHITE);
         //g2.setRenderingHints(rh);
 
@@ -72,8 +72,8 @@ public class PauseGUI implements GUI {
             }
 
             g2.drawString(line,
-                    (int) (((Global.maxTileX * Global.tileSize) / 2) - Global.font.getStringBounds(line, g2.getFontRenderContext()).getCenterX()),
-                    Global.font.getSize() * i + Global.font.getSize() + dim.y);
+                    (int) (((Global.maxTileX * Global.tileSize) / 2) - Global.getFont().getStringBounds(line, g2.getFontRenderContext()).getCenterX()),
+                    Global.getFont().getSize() * i + Global.getFont().getSize() + dim.y);
         }
     }
 }

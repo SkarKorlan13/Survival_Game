@@ -10,7 +10,7 @@ import java.util.List;
 
 public class GameGUIHandler {
 
-    public static List<GUI> active = new ArrayList<>();
+    private static List<GUI> active = new ArrayList<>();
 
     /*
     Pause Menu

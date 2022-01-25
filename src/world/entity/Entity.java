@@ -14,7 +14,7 @@ public abstract class Entity extends WorldObject implements java.io.Serializable
 
     protected Point lastPos; //last world position in tiles
 
-    protected int width, height; //size in pixels
+    protected int width, height; //size in pixels, unused currently
 
     protected int moveTime; //number of ticks between each movement
 
@@ -54,7 +54,7 @@ public abstract class Entity extends WorldObject implements java.io.Serializable
             Global.game.updateCameraPos(new Point(pos));
 
             if (Global.game.world.get(0, pos) instanceof Tile_Water) {
-                moveTicks -= moveTime;
+                moveTicks -= moveTime; //half move speed on water
             }
         } else {
             System.out.println("New Position Occupied");
