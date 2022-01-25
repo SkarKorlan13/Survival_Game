@@ -8,13 +8,13 @@ import util.MathUtils;
 
 import javax.swing.*;
 
-public class NewGame_MenuGUI extends MenuGUI implements GUI {
+public class NewGame extends MenuGUI {
 
     private int minWorldSize = Math.max(Global.maxTileX, Global.maxTileY);
     private int worldSize = minWorldSize;
     private long worldSeed;
 
-    public NewGame_MenuGUI() {
+    public NewGame() {
         updateLines();
     }
 

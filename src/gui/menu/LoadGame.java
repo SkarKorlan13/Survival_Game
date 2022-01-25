@@ -8,9 +8,9 @@ import util.ControlHandler;
 import javax.swing.*;
 import java.io.File;
 
-public class LoadGame_MenuGUI extends MenuGUI implements GUI {
+public class LoadGame extends MenuGUI {
 
-    public LoadGame_MenuGUI() {
+    public LoadGame() {
         updateLines();
     }
 

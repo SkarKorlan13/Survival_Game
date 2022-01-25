@@ -9,6 +9,8 @@ import java.awt.*;
 
 public class PauseGUI implements GUI {
 
+    public boolean active = false;
+
     private Rectangle dim;
 
     private int currentLine=0;
@@ -22,7 +24,7 @@ public class PauseGUI implements GUI {
                 "Back"
         };
 
-        dim = new Rectangle((int) (Window.maxSize.getWidth()/6), (int) (Window.maxSize.getHeight()/6), (int) (Window.maxSize.getWidth()*2/3), (int) (Window.maxSize.getHeight()*2/3));
+        updateDim();
     }
 
     @Override
@@ -75,5 +77,15 @@ public class PauseGUI implements GUI {
                     (int) (((Global.maxTileX * Global.tileSize) / 2) - Global.getFont().getStringBounds(line, g2.getFontRenderContext()).getCenterX()),
                     Global.getFont().getSize() * i + Global.getFont().getSize() + dim.y);
         }
+    }
+
+    @Override
+    public void updateDim() {
+        dim = new Rectangle(Window.gamePanel.getWidth()/6,
+                            Window.gamePanel.getHeight()/6,
+                            Window.gamePanel.getWidth()*2/3,
+                            Window.gamePanel.getHeight()*2/3);
+
+        System.out.println("PauseGUI: " + dim);
     }
 }

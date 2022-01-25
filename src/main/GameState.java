@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 
-public class GameState implements State{
+public class GameState implements State {
 
     public GameGUIHandler guiHandler = new GameGUIHandler();
 
@@ -30,6 +30,7 @@ public class GameState implements State{
 
         world = new World(worldSize, worldSeed);
         updateCameraPos(world.getPlayerPos());
+        updateDim();
     }
 
     public GameState(String filename) {
@@ -50,6 +51,7 @@ public class GameState implements State{
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+        updateDim();
     }
 
     public void init() {
@@ -126,4 +128,7 @@ public class GameState implements State{
             //return false;
         }
     }
+
+    @Override
+    public void updateDim() { guiHandler.updateDim(); }
 }

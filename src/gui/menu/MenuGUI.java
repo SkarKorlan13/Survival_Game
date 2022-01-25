@@ -8,13 +8,11 @@ import java.awt.*;
 
 public class MenuGUI implements GUI {
 
-
-
     //RenderingHints rh = new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
     protected String[] lines;
 
-    protected int currentLine;
+    protected int currentLine=0;
 
     @Override
     public void tick() {
@@ -54,6 +52,11 @@ public class MenuGUI implements GUI {
                     (int) (((Global.maxTileX * Global.tileSize) / 2) - Global.getFont().getStringBounds(line, g2.getFontRenderContext()).getCenterX()),
                     Global.getFont().getSize() * i + Global.getFont().getSize());
         }
+    }
+
+    @Override
+    public void updateDim() {
+        //nothing because window size not used, only maxTile X/Y and tilesize
     }
 
 

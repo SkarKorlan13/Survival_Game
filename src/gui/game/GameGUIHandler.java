@@ -1,16 +1,11 @@
 package gui.game;
 
-import gui.GUI;
 import main.Global;
 import util.ControlHandler;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class GameGUIHandler {
-
-    private static List<GUI> active = new ArrayList<>();
 
     /*
     Pause Menu
@@ -25,15 +20,18 @@ public class GameGUIHandler {
 
     private static PauseGUI pauseGUI = new PauseGUI();
 
-    private static MainGUI mainGUI = new MainGUI();
+    private static MainGUIHandler mainGUIHandler = new MainGUIHandler();
 
     public GameGUIHandler() {
 
     }
 
     public void render(Graphics2D g2) {
-        for (int i = 0; i < active.size(); i++) {
-            active.get(i).render(g2);
+        mainGUIHandler.render(g2);
+
+        //Pause menu renders on top
+        if (pauseGUI.active) {
+            pauseGUI.render(g2);
         }
     }
 
@@ -43,14 +41,21 @@ public class GameGUIHandler {
             Global.game.gamePaused = !Global.game.gamePaused;
         }
 
-        if (Global.game.gamePaused && !active.contains(pauseGUI)) {
-            active.add(pauseGUI);
+        if (Global.game.gamePaused && !pauseGUI.active) {
+            pauseGUI.active = true;
         } else if (!Global.game.gamePaused) {
-            active.remove(pauseGUI);
+            pauseGUI.active = false;
         }
 
-        for (int i = 0; i < active.size(); i++) {
-            active.get(i).tick();
+        if (pauseGUI.active) {
+            pauseGUI.tick();
+        } else {
+            mainGUIHandler.tick();
         }
+    }
+
+    public void updateDim() {
+        pauseGUI.updateDim();
+        mainGUIHandler.updateDim();
     }
 }

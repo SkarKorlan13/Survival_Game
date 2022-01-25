@@ -2,20 +2,18 @@ package gui.menu;
 
 import gui.GUI;
 import main.Global;
-import main.MainMenuState;
 import main.Window;
 import util.ControlHandler;
 
-public class Main_MenuGUI extends MenuGUI implements GUI {
+public class Main extends MenuGUI {
 
-    public Main_MenuGUI() {
+    public Main() {
         lines = new String[] {
                 "New Game",
                 "Load Game",
                 /*"Settings",*/
                 "Exit"
         };
-        currentLine = 0;    //New Game by default
     }
 
     @Override
@@ -24,8 +22,8 @@ public class Main_MenuGUI extends MenuGUI implements GUI {
 
         if (ControlHandler.SELECT.pressedTick()) {
             switch (currentLine) {
-                case 0 -> Global.menu.nextMenu(new NewGame_MenuGUI());
-                case 1 -> Global.menu.nextMenu(new LoadGame_MenuGUI());
+                case 0 -> Global.menu.nextMenu(new NewGame());
+                case 1 -> Global.menu.nextMenu(new LoadGame());
                 //case 2 -> Global.menu.addCurrentMenu(MainMenuState.MenuType.SETTINGS);
                 //case 3 -> Window.close();
 

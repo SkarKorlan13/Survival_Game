@@ -29,19 +29,19 @@ public class Player extends Entity {
         }
 
         //UPDATE DIRECTION
-        if (ControlHandler.UP.pressedTick() && dir.direction != Direction.UP) {
+        if (ControlHandler.W.pressedTick() && dir.direction != Direction.UP) {
             dir.direction = Direction.UP;
             isMove = false;
             moveTicks = moveTime / 2;
-        } else if (ControlHandler.DOWN.pressedTick() && dir.direction != Direction.DOWN) {
+        } else if (ControlHandler.S.pressedTick() && dir.direction != Direction.DOWN) {
             dir.direction = Direction.DOWN;
             isMove = false;
             moveTicks = moveTime / 2;
-        } else if (ControlHandler.LEFT.pressedTick() && dir.direction != Direction.LEFT) {
+        } else if (ControlHandler.A.pressedTick() && dir.direction != Direction.LEFT) {
             dir.direction = Direction.LEFT;
             isMove = false;
             moveTicks = moveTime / 2;
-        } else if (ControlHandler.RIGHT.pressedTick() && dir.direction != Direction.RIGHT) {
+        } else if (ControlHandler.D.pressedTick() && dir.direction != Direction.RIGHT) {
             dir.direction = Direction.RIGHT;
             isMove = false;
             moveTicks = moveTime / 2;
@@ -51,16 +51,16 @@ public class Player extends Entity {
         else if (isMove) {
             Point newPos = new Point(pos);
 
-            if (dir.direction == Direction.UP && ControlHandler.UP.down()) {
+            if (dir.direction == Direction.UP && ControlHandler.W.down()) {
                 newPos.y--;
                 isMove = false;
-            } else if (dir.direction == Direction.DOWN && ControlHandler.DOWN.down()) {
+            } else if (dir.direction == Direction.DOWN && ControlHandler.S.down()) {
                 newPos.y++;
                 isMove = false;
-            } else if (dir.direction == Direction.LEFT && ControlHandler.LEFT.down()) {
+            } else if (dir.direction == Direction.LEFT && ControlHandler.A.down()) {
                 newPos.x--;
                 isMove = false;
-            } else if (dir.direction == Direction.RIGHT && ControlHandler.RIGHT.down()) {
+            } else if (dir.direction == Direction.RIGHT && ControlHandler.D.down()) {
                 newPos.x++;
                 isMove = false;
             }
@@ -73,8 +73,6 @@ public class Player extends Entity {
                 }
             }
         }
-
-        System.out.println("moveTicks: " + moveTicks + " | isMove: " + isMove);
 
         //----------------INTERACT----------------//
         if (ControlHandler.INTERACT.pressedTick()) {

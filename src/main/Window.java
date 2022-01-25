@@ -73,6 +73,8 @@ public class Window implements Runnable{
                 width = gamePanel.getWidth();
                 height = gamePanel.getHeight();
                 System.out.println(width + " # " + height);
+
+                Global.currentState.updateDim();
             }
         });
 

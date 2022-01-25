@@ -19,4 +19,9 @@ public class GameGUI implements GUI {
     public void render(Graphics2D g2) {
 
     }
+
+    @Override
+    public void updateDim() {
+
+    }
 }

@@ -1,6 +1,6 @@
 package main;
 
-import gui.menu.Main_MenuGUI;
+import gui.menu.Main;
 import gui.menu.MenuGUI;
 
 import java.awt.*;
@@ -20,7 +20,8 @@ public class MainMenuState implements State {
 
     public MainMenuState() {
         currentMenus = new MenuGUI[MenuType.values().length];
-        currentMenus[0] = new Main_MenuGUI();    //Default to main menu
+        currentMenus[0] = new Main();    //Default to main menu
+        updateDim();
     }
 
     public void nextMenu(MenuGUI menu) {
@@ -52,5 +53,14 @@ public class MainMenuState implements State {
     @Override
     public void render(Graphics2D g2) {
         currentMenus[index].render(g2);
+    }
+
+    @Override
+    public void updateDim() {
+        for (MenuGUI menu : currentMenus) {
+            if (menu != null) {
+                menu.updateDim();
+            }
+        }
     }
 }
