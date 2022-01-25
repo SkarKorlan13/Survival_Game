@@ -1,8 +1,14 @@
 /----------URGENT--------/
 
-fix menu switching - index staying 0?
-
 /----------OTHER---------/
+
+change tiles
+
+add in game menus:
+    general info (hunger, thirst, etc.)
+    inventory
+    crafting
+    etc.
 
 add specific tile interactions etc.
 

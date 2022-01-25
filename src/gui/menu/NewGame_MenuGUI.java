@@ -1,7 +1,7 @@
-package gui;
+package gui.menu;
 
+import gui.GUI;
 import main.Global;
-import main.MainMenuState;
 import main.Window;
 import util.ControlHandler;
 import util.MathUtils;
@@ -10,15 +10,15 @@ import javax.swing.*;
 
 public class NewGame_MenuGUI extends MenuGUI implements GUI {
 
-    int minWorldSize = Math.max(Global.maxTileX, Global.maxTileY);
-    int worldSize = minWorldSize;
-    long worldSeed;
+    private int minWorldSize = Math.max(Global.maxTileX, Global.maxTileY);
+    private int worldSize = minWorldSize;
+    private long worldSeed;
 
     public NewGame_MenuGUI() {
         updateLines();
     }
 
-    public void updateLines() {
+    private void updateLines() {
         lines = new String[] {
                 "World Size: " + worldSize,
                 "World Seed: " + worldSeed,
@@ -58,10 +58,6 @@ public class NewGame_MenuGUI extends MenuGUI implements GUI {
                 case 2 -> Global.createNewGame(worldSize, worldSeed);
                 case 3 -> Global.menu.previousMenu();
             }
-        }
-
-        if (ControlHandler.BACK.pressedTick()) {
-            Global.menu.previousMenu();
         }
     }
 }

@@ -1,15 +1,19 @@
-package gui;
+package gui.game;
 
+import gui.GUI;
 import main.Global;
 import main.Window;
 import util.ControlHandler;
 
-import javax.swing.*;
 import java.awt.*;
 
-public class PauseGUI extends MenuGUI implements GUI {
+public class PauseGUI implements GUI {
 
-    public Rectangle dim;
+    private Rectangle dim;
+
+    private int currentLine=0;
+
+    private String[] lines;
 
     public PauseGUI() {
         lines = new String[] {
@@ -44,13 +48,7 @@ public class PauseGUI extends MenuGUI implements GUI {
         if (ControlHandler.SELECT.pressedTick()) {
             switch (currentLine) {
                 case 0 -> Global.game.save();
-                case 1 -> {
-                    //int i = JOptionPane.showConfirmDialog(Window.frame,"Save Game?", "Save Game", JOptionPane.YES_NO_OPTION);
-                    //if (i == JOptionPane.YES_OPTION) {
-                    //    Global.game.save();
-                    //}
-                    Global.setState(Global.StateType.MENU, null);
-                }
+                case 1 -> Global.setState(Global.StateType.MENU, null);
                 case 2 -> Global.game.gamePaused = false;
             }
         }

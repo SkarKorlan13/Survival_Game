@@ -1,5 +1,6 @@
-package gui;
+package gui.game;
 
+import gui.GUI;
 import main.Global;
 import util.ControlHandler;
 
@@ -13,14 +14,18 @@ public class GameGUIHandler {
 
     /*
     Pause Menu
-    HUD
-    Inventory
+    Main GUI:
+        Inventory
+        Info on focused tile
+        Crafting
+        etc.
+    Maybe more, idk
     ...
      */
 
     private static PauseGUI pauseGUI = new PauseGUI();
 
-    //private static MainGUI mainGUI = new MainGUI();
+    private static MainGUI mainGUI = new MainGUI();
 
     public GameGUIHandler() {
 

@@ -1,8 +1,7 @@
 package main;
 
-import gui.GameGUIHandler;
+import gui.game.GameGUIHandler;
 import world.World;
-import world.entity.Player;
 
 import javax.swing.*;
 import java.awt.*;

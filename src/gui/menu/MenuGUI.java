@@ -1,5 +1,6 @@
-package gui;
+package gui.menu;
 
+import gui.GUI;
 import main.Global;
 import util.ControlHandler;
 
@@ -11,9 +12,9 @@ public class MenuGUI implements GUI {
 
     //RenderingHints rh = new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-    public String[] lines;
+    protected String[] lines;
 
-    public int currentLine;
+    protected int currentLine;
 
     @Override
     public void tick() {

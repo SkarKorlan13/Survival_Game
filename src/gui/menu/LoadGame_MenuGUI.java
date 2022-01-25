@@ -1,7 +1,7 @@
-package gui;
+package gui.menu;
 
+import gui.GUI;
 import main.Global;
-import main.MainMenuState;
 import main.Window;
 import util.ControlHandler;
 
@@ -43,10 +43,6 @@ public class LoadGame_MenuGUI extends MenuGUI implements GUI {
             } else {
                 Global.loadGame("saves\\" + lines[currentLine] + ".txt");
             }
-        }
-
-        if (ControlHandler.BACK.pressedTick()) {
-            Global.menu.previousMenu();
         }
 
         if (ControlHandler.DELETE.pressedTick()) {

@@ -1,5 +1,6 @@
-package gui;
+package gui.menu;
 
+import gui.GUI;
 import main.Global;
 import main.MainMenuState;
 import main.Window;
@@ -23,8 +24,8 @@ public class Main_MenuGUI extends MenuGUI implements GUI {
 
         if (ControlHandler.SELECT.pressedTick()) {
             switch (currentLine) {
-                case 0 -> Global.menu.addCurrentMenu(MainMenuState.MenuType.NEW_GAME);
-                case 1 -> Global.menu.addCurrentMenu(MainMenuState.MenuType.LOAD_GAME);
+                case 0 -> Global.menu.nextMenu(new NewGame_MenuGUI());
+                case 1 -> Global.menu.nextMenu(new LoadGame_MenuGUI());
                 //case 2 -> Global.menu.addCurrentMenu(MainMenuState.MenuType.SETTINGS);
                 //case 3 -> Window.close();
 
