@@ -29,6 +29,14 @@ public class Global {
     public static int maxTileX = 23; //24 + 1 for player in middle
     public static int maxTileY = 15; //12 + 1 for player in middle
 
+    public static double getMaxTileX() {
+        return maxTileX;
+    }
+
+    public static double getMaxTileY() {
+        return maxTileY;
+    }
+
     public static void setState(StateType state, State gameState) {
         Global.currentStateType = state;
 

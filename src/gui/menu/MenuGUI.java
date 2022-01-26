@@ -3,6 +3,7 @@ package gui.menu;
 import gui.GUI;
 import main.Global;
 import util.ControlHandler;
+import util.Renderer;
 
 import java.awt.*;
 
@@ -31,12 +32,13 @@ public class MenuGUI implements GUI {
         }
 
         if (ControlHandler.BACK.pressedTick()) {
-            Global.menu.previousMenu();
+            Global.currentState.previousMenu();
         }
     }
 
     @Override
     public void render(Graphics2D g2) {
+        /*
         g2.setFont(Global.getFont());
         g2.setColor(Color.WHITE);
         //g2.setRenderingHints(rh);
@@ -52,6 +54,12 @@ public class MenuGUI implements GUI {
                     (int) (((Global.maxTileX * Global.tileSize) / 2) - Global.getFont().getStringBounds(line, g2.getFontRenderContext()).getCenterX()),
                     Global.getFont().getSize() * i + Global.getFont().getSize());
         }
+         */
+
+        String[] renderLines = lines.clone();
+        renderLines[currentLine] = ">" + renderLines[currentLine] + "<";
+
+        Renderer.renderText(Global.getFont(), true, g2, Color.WHITE, renderLines);
     }
 
     @Override
@@ -59,5 +67,7 @@ public class MenuGUI implements GUI {
         //nothing because window size not used, only maxTile X/Y and tilesize
     }
 
-
+    public String[] getRenderText() { //Should be overridden by subclass
+        return lines;
+    }
 }

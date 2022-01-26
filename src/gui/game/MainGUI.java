@@ -1,12 +1,14 @@
 package gui.game;
 
 import gui.GUI;
+import gui.menu.MenuGUI;
 import main.Global;
 import main.Window;
+import util.Renderer;
 
 import java.awt.*;
 
-public class MainGUIHandler implements GUI {
+public class MainGUI implements GUI {
 
     private static Rectangle dim;
 
@@ -14,13 +16,13 @@ public class MainGUIHandler implements GUI {
 
     private int index=0;
 
-    public enum GameGUIType { //same as MenuType: obsolete but may be useful later
+    public enum GameGUIType { //same as MenuType: currently unused but may be useful later
         Inventory,
         Crafting,
         Main
     }
 
-    public MainGUIHandler() {
+    public MainGUI() {
         openGUIs = new GUI[GameGUIType.values().length];
         openGUIs[0] = new MainGameGUI();
         updateDim();
@@ -32,6 +34,7 @@ public class MainGUIHandler implements GUI {
     }
 
     public void previousGUI() {
+        if (index == 0) return;
         openGUIs[index] = null;
         index--;
     }
@@ -43,10 +46,12 @@ public class MainGUIHandler implements GUI {
 
     @Override
     public void render(Graphics2D g2) {
-        g2.setColor(Color.PINK);
+        g2.setColor(Color.PINK); //testing
         g2.fillRect(dim.x, dim.y, dim.width, dim.height);
 
-        openGUIs[index].render(g2);
+        //openGUIs[index].render(g2);
+
+        Renderer.renderText(dim, Global.getFont(), false, g2, Color.WHITE, ((MenuGUI) openGUIs[index]).getRenderText());
     }
 
     @Override

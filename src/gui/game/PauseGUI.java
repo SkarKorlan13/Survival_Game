@@ -4,6 +4,7 @@ import gui.GUI;
 import main.Global;
 import main.Window;
 import util.ControlHandler;
+import util.Renderer;
 
 import java.awt.*;
 
@@ -62,29 +63,20 @@ public class PauseGUI implements GUI {
         g2.setColor(Color.BLACK);
         g2.fillRect(dim.x, dim.y, dim.width, dim.height);
 
-        g2.setFont(Global.getFont());
-        g2.setColor(Color.WHITE);
-        //g2.setRenderingHints(rh);
+        String[] renderLines = lines.clone();
+        renderLines[currentLine] = ">" + renderLines[currentLine] + "<";
 
-        for (int i = 0; i < lines.length; i++) {
-            String line = lines[i];
-
-            if (i == currentLine) {
-                line = ">" + line + "<";
-            }
-
-            g2.drawString(line,
-                    (int) (((Global.maxTileX * Global.tileSize) / 2) - Global.getFont().getStringBounds(line, g2.getFontRenderContext()).getCenterX()),
-                    Global.getFont().getSize() * i + Global.getFont().getSize() + dim.y);
-        }
+        Renderer.renderText(dim, Global.getFont(), true, g2, Color.WHITE, renderLines);
     }
 
     @Override
     public void updateDim() {
-        dim = new Rectangle(Window.gamePanel.getWidth()/6,
-                            Window.gamePanel.getHeight()/6,
-                            Window.gamePanel.getWidth()*2/3,
-                            Window.gamePanel.getHeight()*2/3);
+        dim = new Rectangle(
+                (int)(Global.getMaxTileX()/3 * Global.tileSize),
+                (int)(Global.getMaxTileY()/3 * Global.tileSize),
+                (int)(Global.getMaxTileX()/3 * Global.tileSize),
+                (int)(Global.getMaxTileY()/3 * Global.tileSize)
+        );
 
         System.out.println("PauseGUI: " + dim);
     }

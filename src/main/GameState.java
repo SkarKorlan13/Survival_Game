@@ -131,4 +131,9 @@ public class GameState implements State {
 
     @Override
     public void updateDim() { guiHandler.updateDim(); }
+
+    @Override
+    public void previousMenu() {
+        guiHandler.previousGUI();
+    }
 }

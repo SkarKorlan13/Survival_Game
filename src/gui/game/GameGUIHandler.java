@@ -20,14 +20,14 @@ public class GameGUIHandler {
 
     private static PauseGUI pauseGUI = new PauseGUI();
 
-    private static MainGUIHandler mainGUIHandler = new MainGUIHandler();
+    private static MainGUI mainGUI = new MainGUI();
 
     public GameGUIHandler() {
 
     }
 
     public void render(Graphics2D g2) {
-        mainGUIHandler.render(g2);
+        mainGUI.render(g2);
 
         //Pause menu renders on top
         if (pauseGUI.active) {
@@ -50,12 +50,16 @@ public class GameGUIHandler {
         if (pauseGUI.active) {
             pauseGUI.tick();
         } else {
-            mainGUIHandler.tick();
+            mainGUI.tick();
         }
     }
 
     public void updateDim() {
         pauseGUI.updateDim();
-        mainGUIHandler.updateDim();
+        mainGUI.updateDim();
+    }
+
+    public void previousGUI() {
+        mainGUI.previousGUI();
     }
 }
