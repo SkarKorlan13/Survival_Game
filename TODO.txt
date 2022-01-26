@@ -2,7 +2,7 @@
 
 /----------OTHER---------/
 
-change tiles
+change initial Window size to fit new game menu
 
 add in game menus:
     general info (hunger, thirst, etc.)
