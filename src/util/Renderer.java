@@ -7,6 +7,11 @@ import java.awt.*;
 public class Renderer {
     public static void renderText(Rectangle dim, Font font, boolean centeredX, Graphics2D g2, Color color, String... lines) {
 
+        if (lines == null) {
+            System.out.println("renderText.lines == null");
+            return;
+        }
+
         g2.setFont(font);
         g2.setColor(color);
 

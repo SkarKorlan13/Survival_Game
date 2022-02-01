@@ -32,7 +32,8 @@ public abstract class Entity extends WorldObject implements java.io.Serializable
         this.width = Global.tileSize;
         this.height = Global.tileSize;
         this.lastPos = new Point();
-        dir = new Direction();
+        this.dir = new Direction();
+        this.inventory = new Inventory();
     }
 
     public Direction getDir() {
@@ -67,5 +68,9 @@ public abstract class Entity extends WorldObject implements java.io.Serializable
 
     public Tool getCurrentTool() {
         return currentTool == null ? new Tool_Hand() : currentTool;
+    }
+
+    public String[] getInventory() {
+        return inventory.getItemsArray();
     }
 }

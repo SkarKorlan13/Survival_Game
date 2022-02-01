@@ -2,7 +2,7 @@
 
 /----------OTHER---------/
 
-change initial Window size to fit new game menu
+maybe change all guis to static for easier use -> no more Global.game.guiHandler.mainGameGUI.currentMenu etc.
 
 add in game menus:
     general info (hunger, thirst, etc.)

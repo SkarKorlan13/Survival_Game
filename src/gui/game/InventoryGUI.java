@@ -9,6 +9,15 @@ public class InventoryGUI extends MenuGUI {
     }
 
     public void updateLines() {
-        //lines = Global.game.world.getPlayer().getInventory(); TODO
+        lines = Global.game.world.getPlayer().getInventory();
+    }
+
+    @Override
+    public String[] getRenderText() {
+        String[] renderLines = lines.clone();
+
+        renderLines[currentLine] += "<";
+
+        return renderLines;
     }
 }
