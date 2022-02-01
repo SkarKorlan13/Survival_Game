@@ -34,7 +34,7 @@ public class Window implements Runnable{
 
     public static void init(String title) {
 
-        maxSize = new Dimension(Global.tileSize*Global.maxTileX, Global.tileSize*Global.maxTileY);
+        maxSize = new Dimension((int)(Global.tileSize*Global.maxTileX*1.5), Global.tileSize*Global.maxTileY);
 
         lastFrame = Time.now();
         lastSecond = Time.now();

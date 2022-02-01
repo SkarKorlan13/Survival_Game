@@ -1,6 +1,5 @@
 package gui.menu;
 
-import gui.GUI;
 import main.Global;
 import main.Window;
 import util.ControlHandler;
@@ -8,13 +7,13 @@ import util.MathUtils;
 
 import javax.swing.*;
 
-public class NewGame extends MenuGUI {
+public class NewGameMenu extends MenuGUI {
 
     private int minWorldSize = Math.max(Global.maxTileX, Global.maxTileY);
     private int worldSize = minWorldSize;
     private long worldSeed;
 
-    public NewGame() {
+    public NewGameMenu() {
         updateLines();
     }
 

@@ -4,6 +4,7 @@ import main.Global;
 import util.ControlHandler;
 import util.Direction;
 import world.ImageHandler;
+import world.item.Inventory;
 
 import java.awt.*;
 

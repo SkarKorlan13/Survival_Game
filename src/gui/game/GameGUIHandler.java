@@ -20,7 +20,7 @@ public class GameGUIHandler {
 
     private static PauseGUI pauseGUI = new PauseGUI();
 
-    private static MainGUI mainGUI = new MainGUI();
+    public static MainGameGUI mainGUI = new MainGameGUI();
 
     public GameGUIHandler() {
 

@@ -24,7 +24,7 @@ public abstract class Entity extends WorldObject implements java.io.Serializable
 
     protected Direction dir;
 
-    public Inventory inventory;
+    protected Inventory inventory;
 
     protected Tool currentTool;
 

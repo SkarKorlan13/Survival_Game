@@ -1,6 +1,6 @@
 package main;
 
-import gui.menu.Main;
+import gui.menu.MainMenu;
 import gui.menu.MenuGUI;
 
 import java.awt.*;
@@ -20,7 +20,7 @@ public class MainMenuState implements State {
 
     public MainMenuState() {
         currentMenus = new MenuGUI[MenuType.values().length];
-        currentMenus[0] = new Main();    //Default to main menu
+        currentMenus[0] = new MainMenu();    //Default to main menu
         updateDim();
     }
 

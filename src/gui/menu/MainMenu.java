@@ -1,13 +1,12 @@
 package gui.menu;
 
-import gui.GUI;
 import main.Global;
 import main.Window;
 import util.ControlHandler;
 
-public class Main extends MenuGUI {
+public class MainMenu extends MenuGUI {
 
-    public Main() {
+    public MainMenu() {
         lines = new String[] {
                 "New Game",
                 "Load Game",
@@ -22,8 +21,8 @@ public class Main extends MenuGUI {
 
         if (ControlHandler.SELECT.pressedTick()) {
             switch (currentLine) {
-                case 0 -> Global.menu.nextMenu(new NewGame());
-                case 1 -> Global.menu.nextMenu(new LoadGame());
+                case 0 -> Global.menu.nextMenu(new NewGameMenu());
+                case 1 -> Global.menu.nextMenu(new LoadGameMenu());
                 //case 2 -> Global.menu.addCurrentMenu(MainMenuState.MenuType.SETTINGS);
                 //case 3 -> Window.close();
 

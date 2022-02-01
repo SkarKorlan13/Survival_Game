@@ -258,4 +258,8 @@ public class World implements java.io.Serializable {
     public Point getPlayerPos() {
         return worldObjects[1].getPos();
     }
+
+    public Player getPlayer() {
+        return (Player) worldObjects[1];
+    }
 }

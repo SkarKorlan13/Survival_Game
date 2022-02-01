@@ -1,6 +1,5 @@
 package gui.menu;
 
-import gui.GUI;
 import main.Global;
 import main.Window;
 import util.ControlHandler;
@@ -8,9 +7,9 @@ import util.ControlHandler;
 import javax.swing.*;
 import java.io.File;
 
-public class LoadGame extends MenuGUI {
+public class LoadGameMenu extends MenuGUI {
 
-    public LoadGame() {
+    public LoadGameMenu() {
         updateLines();
     }
 
