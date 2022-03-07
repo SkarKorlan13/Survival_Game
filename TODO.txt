@@ -1,5 +1,7 @@
 /----------URGENT--------/
 
+major redesign of packages
+
 /----------OTHER---------/
 
 change initial Window size to fit new game menu
