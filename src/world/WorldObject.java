@@ -7,7 +7,7 @@ import java.awt.*;
 
 public abstract class WorldObject implements java.io.Serializable {
 
-    protected int id;
+    protected String id;
 
     protected int worldID;
 
@@ -19,10 +19,10 @@ public abstract class WorldObject implements java.io.Serializable {
     public abstract void interact(Entity e);
 
     public void render(Graphics2D g2, Point pos) {
-        g2.drawImage(ImageHandler.tiles_entities[getStateID()], pos.x * Global.tileSize, pos.y * Global.tileSize, Global.tileSize, Global.tileSize, null);
+        g2.drawImage(ImageHandler.getImage(id), pos.x * Global.tileSize, pos.y * Global.tileSize, Global.tileSize, Global.tileSize, null);
     }
 
-    public int getID() {
+    public String getID() {
         return id;
     }
 
@@ -34,9 +34,9 @@ public abstract class WorldObject implements java.io.Serializable {
         this.worldID = worldID;
     }
 
-    public int getStateID() {
-        return id + state;
-    }
+    //public int getStateID() {
+    //    return id + state;
+    //}
 
     public void setState(int state) {
         this.state = state;

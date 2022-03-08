@@ -9,25 +9,22 @@ public class GameGUIHandler {
 
     /*
     Pause Menu
-    Main GUI:
-        Inventory
-        Info on focused tile
-        Crafting
-        etc.
+    Hotbar/Inventory
+    Info on focused tile (WAILA style)
+    Crafting
+    etc.
     Maybe more, idk
     ...
      */
 
     private static PauseGUI pauseGUI = new PauseGUI();
 
-    public static MainGameGUI mainGUI = new MainGameGUI();
-
     public GameGUIHandler() {
 
     }
 
     public void render(Graphics2D g2) {
-        mainGUI.render(g2);
+        //mainGUI.render(g2);
 
         //Pause menu renders on top
         if (pauseGUI.active) {
@@ -50,16 +47,16 @@ public class GameGUIHandler {
         if (pauseGUI.active) {
             pauseGUI.tick();
         } else {
-            mainGUI.tick();
+            //mainGUI.tick();
         }
     }
 
     public void updateDim() {
         pauseGUI.updateDim();
-        mainGUI.updateDim();
+        //mainGUI.updateDim();
     }
 
     public void previousGUI() {
-        mainGUI.previousGUI();
+        //mainGUI.previousGUI();
     }
 }

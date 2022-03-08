@@ -13,8 +13,8 @@ public abstract class Tile extends WorldObject implements java.io.Serializable {
 
     protected int[][] drops;
 
-    public Tile(int id, boolean passable) {
-        this.id = id;
+    public Tile(String imageID, boolean passable) {
+        this.id = imageID;
         this.passable = passable;
     }
 

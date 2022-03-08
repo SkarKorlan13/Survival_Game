@@ -1,10 +1,12 @@
-/----------URGENT--------/
+/---------CURRENT--------/
 
 major redesign of packages
+    Fix tile/entity ids and states
+    Also fix all tile business (not good times)
 
-/----------OTHER---------/
+/----------NEXT----------/
 
-maybe change all guis to static for easier use -> no more Global.game.guiHandler.mainGameGUI.currentMenu etc.
+maybe change all guis to static for easier use? >> no more Global.game.guiHandler.mainGameGUI.currentMenu etc.
 
 add in game menus:
     general info (hunger, thirst, etc.)
@@ -30,8 +32,7 @@ add icon
 
 Mouse controls?
 
-
-
+/-----------OLD----------/
 
 font possibilities:
     Alagard
@@ -40,3 +41,9 @@ font possibilities:
 current font choice:
     Alagard
 
+/----------INFO----------/
+
+Tiles:
+    Grass, Farm tiles, etc. (base level)
+Entities:
+    Player, trees, etc. (everything else)

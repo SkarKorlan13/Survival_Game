@@ -6,7 +6,7 @@ import world.entity.Entity;
 public class Tile_Farm extends Tile {
 
     public Tile_Farm() {
-        super(ImageHandler.FARM_DRY, true);
+        super("Farm_Dry", true);
     }
 
     @Override

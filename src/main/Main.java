@@ -1,5 +1,7 @@
 package main;
 
+import world.ImageHandler;
+
 import java.awt.*;
 
 public class Main{
@@ -28,6 +30,7 @@ public class Main{
 
         //Global.setState(Global.StateType.GAME);
 
+        ImageHandler.initializeImages();
 
         Global.setState(Global.StateType.MENU, null);
 

@@ -14,7 +14,7 @@ public class Player extends Entity {
     public Player() {
         super();
         this.moveTime = 20;
-        this.id = ImageHandler.PLAYER;
+        this.id = "Player";
     }
 
     @Override

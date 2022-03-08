@@ -48,7 +48,7 @@ public class Window implements Runnable{
         //frame.setPreferredSize(minSize);
         //frame.setSize(minSize);
         frame.setResizable(true);
-        frame.setIconImage(ImageHandler.tiles_entities[ImageHandler.PLAYER]);
+        frame.setIconImage(ImageHandler.getImage("Player"));
 
         //frame.setState(JFrame.MAXIMIZED_BOTH);
         //frame.setUndecorated(true);
