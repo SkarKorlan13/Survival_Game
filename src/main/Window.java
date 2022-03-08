@@ -32,9 +32,10 @@ public class Window implements Runnable{
 
     //public static boolean fullscreen=false;
 
-    public static void init(String title) {
+    public static void init(String title, Dimension dim) {
 
-        maxSize = new Dimension((int)(Global.tileSize*Global.maxTileX*1.5), Global.tileSize*Global.maxTileY);
+        //maxSize = new Dimension((int)(Global.tileSize*Global.maxTileX*1.5), Global.tileSize*Global.maxTileY);
+        maxSize = new Dimension(dim);
 
         lastFrame = Time.now();
         lastSecond = Time.now();
