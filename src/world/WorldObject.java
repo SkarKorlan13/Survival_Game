@@ -7,11 +7,7 @@ import java.awt.*;
 
 public abstract class WorldObject implements java.io.Serializable {
 
-    protected String id;
-
-    protected int worldID;
-
-    protected Point pos;
+    protected String id; //is also imageID of tile
 
     //0 being default state
     protected int state = 0;
@@ -26,27 +22,11 @@ public abstract class WorldObject implements java.io.Serializable {
         return id;
     }
 
-    public int getWorldID() {
-        return worldID;
+    public int getState() {
+        return state;
     }
-
-    public void setWorldID(int worldID) {
-        this.worldID = worldID;
-    }
-
-    //public int getStateID() {
-    //    return id + state;
-    //}
 
     public void setState(int state) {
         this.state = state;
-    }
-
-    public Point getPos() {
-        return new Point(pos);
-    }
-
-    public void setPos(Point pos) {
-        this.pos = new Point(pos);
     }
 }

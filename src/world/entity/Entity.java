@@ -6,11 +6,12 @@ import world.WorldObject;
 import world.item.Inventory;
 import world.item.Tool;
 import world.item.Tool_Hand;
-import world.tile.Tile_Water;
-
+import world.tile.Tile;
 import java.awt.*;
 
 public abstract class Entity extends WorldObject implements java.io.Serializable {
+
+    protected Point pos; //world position in tiles
 
     protected Point lastPos; //last world position in tiles
 
@@ -49,12 +50,12 @@ public abstract class Entity extends WorldObject implements java.io.Serializable
 
     public void move(Point newPos) {
         if (Global.game.world.move(pos, newPos)) {
-            System.out.println("Move");
+            System.out.println("Move: " + this);
             lastPos.setLocation(pos);
             pos.setLocation(newPos);
             Global.game.updateCameraPos(new Point(pos));
 
-            if (Global.game.world.get(0, pos) instanceof Tile_Water) {
+            if (Global.game.world.get(0, pos) instanceof Tile) {
                 moveTicks -= moveTime; //half move speed on water
             }
         } else {

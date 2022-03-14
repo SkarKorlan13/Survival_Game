@@ -5,17 +5,10 @@ import world.entity.Entity;
 
 public abstract class Tile extends WorldObject implements java.io.Serializable {
 
-    protected int health;
+    private int speedModifier = 1;
 
-    protected boolean passable;
-
-    protected int progress;
-
-    protected int[][] drops;
-
-    public Tile(String imageID, boolean passable) {
-        this.id = imageID;
-        this.passable = passable;
+    public Tile(String id) {
+        this.id = id;
     }
 
     public void interact(Entity e) {
@@ -23,11 +16,11 @@ public abstract class Tile extends WorldObject implements java.io.Serializable {
         System.out.println(state);
     }
 
-    public void setState(int state) {
-        this.state = state;
+    public int getSpeedModifier() {
+        return speedModifier;
     }
 
-    public boolean isPassable() {
-        return passable;
+    public void setSpeedModifier(int speedModifier) {
+        this.speedModifier = speedModifier;
     }
 }

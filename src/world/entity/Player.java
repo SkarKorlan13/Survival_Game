@@ -4,6 +4,7 @@ import main.Global;
 import util.ControlHandler;
 import util.Direction;
 import world.ImageHandler;
+import world.tile.Tile;
 
 import java.awt.*;
 
@@ -23,7 +24,7 @@ public class Player extends Entity {
         //----------------MOVE----------------//
 
         if (!isMove) moveTicks++;
-        if (moveTicks >= moveTime) {
+        if (moveTicks >= moveTime * ((Tile) Global.game.world.get(0, pos)).getSpeedModifier()) {
             isMove = true;
             moveTicks = 0;
         }

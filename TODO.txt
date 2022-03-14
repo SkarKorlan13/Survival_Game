@@ -2,7 +2,8 @@
 
 major redesign of packages
     Fix tile/entity ids and states
-    Also fix all tile business (not good times)
+    Also fix all that tile business
+    Fix world entity storing (no 2D array)
 
 /----------NEXT----------/
 
@@ -25,6 +26,8 @@ world:
         plan out how tile rendering/ticking/interactions will work
         progress bars?
         GUIs linked to tiles?
+
+Movable_Entity extends Entity? AI?
 
 add dimensions or multiple elevation levels
 

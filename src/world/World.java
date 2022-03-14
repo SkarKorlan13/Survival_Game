@@ -8,26 +8,19 @@ import world.tile.*;
 import world.tile.Tile_Tree_Oak;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class World implements java.io.Serializable {
 
-    //public WorldObject[][][] layers;
-    private int[][][] layers; //holds worldIDs of each worldObject, 0 meaning empty, 1 meaning player
-    //0: Ground Tiles
-    //1: Tiles
-    //2: Entities
+    private Tile[][] tiles; //holds tiles
 
-    public static final int GROUND_TILES = 0;
-    public static final int TILES = 1;
-    public static final int ENTITIES = 2;
-
-    private WorldObject[] worldObjects; //each worldID corresponds to the index of a worldObject in this array
+    private ArrayList<Entity> entities; //each worldID corresponds to the index of an Entity in this array
 
     public int size;
     private long seed;
 
-    private int nextIndex=2; //
+    private int nextIndex=2;
 
     public String saveName;
 
@@ -37,30 +30,10 @@ public class World implements java.io.Serializable {
         this.size = size;
         this.seed = seed;
 
-        //layers = new WorldObject[3][size][size];
-        layers = new int[3][size][size];
-        worldObjects = new WorldObject[3 * size * size];
+        tiles = new Tile[size][size];
+        entities = new ArrayList<Entity>();
 
         generate();
-
-        /*
-        try {
-            FileReader in = new FileReader("res/world/tempWorld.txt");
-            BufferedReader read = new BufferedReader(in);
-
-            for (int y = 0; y < tiles.length; y++) {
-                String[] tileNums = read.readLine().split(" ");
-
-                for (int x = 0; x < tiles[0].length; x++) {
-                    int tileNum = Integer.parseInt(tileNums[x]);
-                    groundTiles[y][x] = tileNum;
-                }
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-         */
     }
 
     public void generate() {
@@ -117,9 +90,6 @@ public class World implements java.io.Serializable {
 
         //ENTITIES
         add(new Player(), new Point(size/2, size/2), ENTITIES, 1);
-
-        //System.out.println("#" + get(GROUND_TILES, new Point(0, 0)).getStateID());
-        //System.out.println("##" + get(GROUND_TILES, new Point(1, 0)).getStateID());
     }
 
     public void tick() {
@@ -143,11 +113,8 @@ public class World implements java.io.Serializable {
     public void render(Graphics2D g2) {
 
         Point TL = new Point(); //Top Left
-        //Point BR = new Point(); //Bottom Right
         TL.x = Global.game.camera.x - (Global.maxTileX/2);
         TL.y = Global.game.camera.y - (Global.maxTileY/2);
-        //BR.x = TL.x + Global.maxTileX;
-        //BR.y = TL.y + Global.maxTileY;
 
         Point tempPos = new Point();
 
