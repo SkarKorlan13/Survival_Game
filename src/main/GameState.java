@@ -41,7 +41,7 @@ public class GameState implements State {
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 
             world = (World) objectInputStream.readObject();
-            worldSize = world.size;
+            worldSize = world.getSize();
 
             init();
 
@@ -63,13 +63,13 @@ public class GameState implements State {
     }
 
     public void save() {
-        while (world.saveName == null) {
+        while (world.getSaveName() == null) {
             String name = JOptionPane.showInputDialog(Window.frame,"Save Name: ");
             try {
                 if (!new File("saves/" + name + ".txt").createNewFile()) {
                     JOptionPane.showMessageDialog(Window.frame,"Save name already in use","Duplicate Name", JOptionPane.WARNING_MESSAGE);
                 } else {
-                    world.saveName = name;
+                    world.setSaveName(name);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -77,7 +77,7 @@ public class GameState implements State {
         }
 
         try {
-            FileOutputStream fileOutputStream = new FileOutputStream("saves/" + world.saveName + ".txt", false);
+            FileOutputStream fileOutputStream = new FileOutputStream("saves/" + world.getSaveName() + ".txt", false);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
 
             objectOutputStream.writeObject(world);

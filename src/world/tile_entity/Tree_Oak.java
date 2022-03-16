@@ -1,14 +1,17 @@
-package world.tile;
+package world.tile_entity;
 
 import main.Global;
-import world.ImageHandler;
 import world.entity.Entity;
 import world.item.Tool;
 
-public class Tile_Tree_Oak extends Tile {
+public class Tree_Oak extends Tile_Entity {
 
-    public Tile_Tree_Oak() {
-        super("Tree_Oak", false);
+    @Override
+    public String getID() {
+        return "Bush";
+    }
+
+    public Tree_Oak() {
         this.health = 20;
     }
 
@@ -22,7 +25,7 @@ public class Tile_Tree_Oak extends Tile {
 
         if (health <= 0) {
             System.out.println("Tree destroyed");
-            Global.game.world.remove(e.getFacing(), 1);
+            Global.game.world.removeTile_Entity(e.getFacing());
         }
     }
 }

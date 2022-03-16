@@ -12,10 +12,14 @@ public class Player extends Entity {
 
     private boolean isMove = false;
 
-    public Player() {
-        super();
+    public Player(Point pos) {
+        super(pos);
         this.moveTime = 20;
-        this.id = "Player";
+    }
+
+    @Override
+    public String getID() {
+        return "Player";
     }
 
     @Override
@@ -24,7 +28,7 @@ public class Player extends Entity {
         //----------------MOVE----------------//
 
         if (!isMove) moveTicks++;
-        if (moveTicks >= moveTime * ((Tile) Global.game.world.get(0, pos)).getSpeedModifier()) {
+        if (moveTicks >= moveTime * Global.game.world.getTile(pos).getSpeedModifier()) {
             isMove = true;
             moveTicks = 0;
         }

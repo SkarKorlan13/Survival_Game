@@ -2,8 +2,9 @@
 
 major redesign of packages
     Fix tile/entity ids and states
-    Also fix all that tile business
-    Fix world entity storing (no 2D array)
+    Fix world and all the errors
+    Tile_Entity
+
 
 /----------NEXT----------/
 

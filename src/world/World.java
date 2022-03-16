@@ -1,11 +1,12 @@
 package world;
 
-import main.Global;
 import util.OpenSimplexNoise;
 import world.entity.Entity;
 import world.entity.Player;
+import world.tile_entity.Bush;
+import world.tile_entity.Tile_Entity;
 import world.tile.*;
-import world.tile.Tile_Tree_Oak;
+import world.tile_entity.Tree_Oak;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -15,23 +16,26 @@ public class World implements java.io.Serializable {
 
     private Tile[][] tiles; //holds tiles
 
+    private Tile_Entity[][] tile_entities; //holds tile_entities
+
+    //other layers?
+
     private ArrayList<Entity> entities; //each worldID corresponds to the index of an Entity in this array
 
-    public int size;
+    private int size;
     private long seed;
 
     private int nextIndex=2;
 
-    public String saveName;
-
+    private String saveName;
 
     public World(int size, long seed) {
-
         this.size = size;
         this.seed = seed;
 
         tiles = new Tile[size][size];
-        entities = new ArrayList<Entity>();
+        tile_entities = new Tile_Entity[size][size];
+        entities = new ArrayList<>();
 
         generate();
     }
@@ -42,7 +46,7 @@ public class World implements java.io.Serializable {
 
         Point pos = new Point();
 
-        //GROUND TILES
+        //TILES
         for (pos.y = 0; pos.y < size; pos.y++) {
             for (pos.x = 0; pos.x < size; pos.x++) {
                 double eval = noise.eval(pos.getX()/10, pos.getY()/10);
@@ -55,43 +59,72 @@ public class World implements java.io.Serializable {
                     tile = new Tile_Grass();
                 }
 
-                add(tile, pos, GROUND_TILES);
+                addTile(tile, pos);
             }
         }
 
-        //TILES
+        //TILE_ENTITIES
         for (pos.y = 0; pos.y < size; pos.y++) {
             for (pos.x = 0; pos.x < size; pos.x++) {
-                if (get(GROUND_TILES, pos) instanceof Tile_Water) continue;
+                if (getTile(pos) instanceof Tile_Water) continue;
 
                 double eval = noise.eval(pos.getX()/10, pos.getY()/10);
 
-                Tile tile;
+                Tile_Entity tile_entity;
 
                 if (eval > 0.5) {
-                    tile = new Tile_Tree_Oak();
+                    tile_entity = new Tree_Oak();
                     if (random.nextInt(16) < 1) {
-                        tile.setState(1);
+                        tile_entity.setState(1);
                     }
                 } else if (random.nextInt(16) < 1) {
-                    tile = new Tile_Bush();
+                    tile_entity = new Bush();
                     if (random.nextInt(4) < 1) {
-                        tile.setState(1);
+                        tile_entity.setState(1);
                     }
                 } else {
-                    tile = null;
+                    tile_entity = null;
                 }
 
-                if (tile != null) {
-                    add(tile, pos, TILES);
+                if (tile_entity != null) {
+                    addTile_Entity(tile_entity, pos);
                 }
             }
         }
 
         //ENTITIES
-        add(new Player(), new Point(size/2, size/2), ENTITIES, 1);
+        addEntity(new Player(new Point(0, 0)), new Point(size/2, size/2), 1);
     }
 
+    //TODO all of this
+
+    public void addEntity(Entity entity, Point pos) {
+        addEntity(entity, pos, nextIndex);
+        nextIndex++;
+    }
+
+    public void addEntity(Entity entity, Point pos, int id) {
+        if (entities.get(id) != null) {
+            System.out.println("Entity overridden at " + pos + ": " + entity);
+        }
+        entities.set(id, entity);
+    }
+
+    public void addTile_Entity(Tile_Entity tile_entity, Point pos) {
+        tile_entities[pos.y][pos.x] = tile_entity;
+    }
+
+    public void addTile(Tile tile, Point pos) {
+        tiles[pos.y][pos.x] = tile;
+    }
+
+    public Tile getTile(Point pos) {
+        return tiles[pos.y][pos.x];
+    }
+
+
+
+    /*
     public void tick() {
         for (int i = 0; i < nextIndex; i++) {
             if (worldObjects[i] == null) continue;
@@ -135,7 +168,7 @@ public class World implements java.io.Serializable {
         setWorldID(layer, pos, 0);
     }
 
-    public void add(WorldObject w, Point pos, int layer, int id) {
+    public void add(Entity w, Point pos, int id) {
         //System.out.println("w: " + w + "  pos: " + pos + "  layer: " + layer + "  int: " + id);
         if (getWorldID(layer, pos) != 0) {
             remove(pos, layer);
@@ -151,7 +184,7 @@ public class World implements java.io.Serializable {
         setWorldID(layer, pos, id);
     }
 
-    public void add(WorldObject w, Point pos, int layer) {
+    public void add(Entity w, Point pos) {
         add(w, pos, layer, nextIndex);
         nextIndex++;
     }
@@ -191,7 +224,7 @@ public class World implements java.io.Serializable {
         }
     }
 
-    public WorldObject get(int layer, Point pos) {
+    public Entity get(Point pos) {
         int id = getWorldID(layer, pos);
         if (id == 0) {
             return null;
@@ -201,7 +234,9 @@ public class World implements java.io.Serializable {
     }
 
     //probably unnecessary
-    public Point getPos(int layer, int worldID) {
+    public Point getPos(int worldID) {
+        return get()
+
         Point pos = new Point();
         for (pos.y = 0; pos.y < size; pos.y++) {
             for (pos.x = 0; pos.x < size; pos.x++) {
@@ -223,10 +258,23 @@ public class World implements java.io.Serializable {
     }
 
     public Point getPlayerPos() {
-        return worldObjects[1].getPos();
+        return entities.get(1).getPos();
     }
 
     public Player getPlayer() {
-        return (Player) worldObjects[1];
+        return (Player) entities.get(1);
+    }
+    */
+
+    public String getSaveName() {
+        return saveName;
+    }
+
+    public void setSaveName(String saveName) {
+        this.saveName = saveName;
+    }
+
+    public int getSize() {
+        return size;
     }
 }

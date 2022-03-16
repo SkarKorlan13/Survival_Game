@@ -29,7 +29,8 @@ public abstract class Entity extends WorldObject implements java.io.Serializable
 
     protected Tool currentTool;
 
-    public Entity() {
+    public Entity(Point pos) {
+        this.pos = new Point(pos);
         this.width = Global.tileSize;
         this.height = Global.tileSize;
         this.lastPos = new Point();
@@ -73,5 +74,13 @@ public abstract class Entity extends WorldObject implements java.io.Serializable
 
     public String[] getInventory() {
         return inventory.getItemsArray();
+    }
+
+    public Point getPos() {
+        return pos;
+    }
+
+    public void setPos(Point pos) {
+        this.pos = pos;
     }
 }
