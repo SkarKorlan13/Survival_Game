@@ -1,16 +1,21 @@
-package world.tile_entity;
+package world.entity;
 
 import world.entity.Entity;
 
-public class Tree_Pine extends Tile_Entity {
+public class Bush extends Entity {
 
     @Override
     public String getID() {
-        return "Tree_Pine";
+        return "Bush";
     }
 
     @Override
     public void interact(Entity e) {
         super.interact(e);
+    }
+
+    @Override
+    boolean isPassable() {
+        return true;
     }
 }

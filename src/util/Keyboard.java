@@ -36,13 +36,6 @@ public class Keyboard {
         }
     }
 
-    public static void tick() {
-        for (Key key : keys) {
-            key.pressedTick = key.down && !key.lastTick;
-            key.lastTick = key.down;
-        }
-    }
-
     public static class Key {
         public boolean down, pressed, pressedTick, last, lastTick;
     }

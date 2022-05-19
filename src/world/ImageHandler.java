@@ -31,8 +31,15 @@ public class ImageHandler {
 
     private static void putImage(File imageFile) {
         FileInputStream in;
+
+        String name = imageFile.getName().replaceFirst(".png", "");
+
+        if (images.containsKey(name)) {
+            System.out.println("Duplicate image " + imageFile.getName());
+        }
+
         try {
-            images.put(imageFile.getName().replaceFirst(".png", ""), ImageIO.read(in = new FileInputStream(imageFile)));
+            images.put(name, ImageIO.read(in = new FileInputStream(imageFile)));
             in.close();
         } catch (IOException e) {
             e.printStackTrace();

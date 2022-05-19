@@ -97,9 +97,7 @@ public class Player extends Entity {
 
     }
 
-    @Override
     public void render(Graphics2D g2, Point pos) {
-        super.render(g2, pos);
 
         Point facing = dir.getFacing();
         facing.translate(pos.x, pos.y);

@@ -34,7 +34,7 @@ public class Main{
 
         Global.setState(Global.StateType.MENU, null);
 
-        Dimension screen = new Dimension(Global.tileSize*Global.maxTileX*3/2, Global.tileSize*Global.maxTileY);
+        Dimension screen = new Dimension(Global.tileSize*Global.maxTileX, Global.tileSize*Global.maxTileY);
 
         Window.init("2D Survival Game", screen);
 

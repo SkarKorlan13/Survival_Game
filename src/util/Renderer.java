@@ -1,10 +1,13 @@
 package util;
 
+import main.Global;
 import main.Window;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class Renderer {
+
     public static void renderText(Rectangle dim, Font font, boolean centeredX, Graphics2D g2, Color color, String... lines) {
 
         if (lines == null) {
@@ -33,5 +36,17 @@ public class Renderer {
 
     public static void renderText(Font font, boolean centeredX, Graphics2D g2, Color color, String... lines) {
         renderText(Window.gamePanel.getBounds(), font, centeredX, g2, color, lines);
+    }
+
+    public static void renderImage(Graphics2D g2, BufferedImage image, Point pos) {
+        renderImage(g2, image, pos.x * Global.tileSize, pos.y * Global.tileSize, Global.tileSize, Global.tileSize);
+    }
+
+    public static void renderImage(Graphics2D g2, BufferedImage image, int pixels_x, int pixels_y, int width, int height) {
+        g2.drawImage(image, pixels_x, pixels_y, width, height, null);
+    }
+
+    public static void render() {
+
     }
 }

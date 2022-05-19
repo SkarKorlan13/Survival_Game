@@ -134,6 +134,7 @@ public class GameState implements State {
 
     @Override
     public void previousMenu() {
-        guiHandler.previousGUI();
+
+        //guiHandler.previousGUI();
     }
 }

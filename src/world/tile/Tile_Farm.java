@@ -4,6 +4,10 @@ import world.entity.Entity;
 
 public class Tile_Farm extends Tile {
 
+    public void render() {
+
+    }
+
     @Override
     public void interact(Entity e) {
         super.interact(e);

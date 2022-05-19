@@ -1,43 +1,35 @@
 package world.entity;
 
-import main.Global;
-import util.Direction;
 import world.WorldObject;
-import world.item.Inventory;
-import world.item.Tool;
-import world.item.Tool_Hand;
-import world.tile.Tile;
 import java.awt.*;
 
 public abstract class Entity extends WorldObject implements java.io.Serializable {
 
     protected Point pos; //world position in tiles
 
-    protected Point lastPos; //last world position in tiles
+    //protected Point lastPos; //last world position in tiles
 
-    protected int width, height; //size in pixels, unused currently
+    //protected int width, height; //size in pixels, unused currently
 
-    protected int moveTime; //number of ticks between each movement
+    //protected int moveTime; //number of ticks between each movement
 
-    protected int moveTicks = 0;
+    //protected int moveTicks = 0;
 
     //public Dimension dimension; //TODO add dimensions
 
-    protected Direction dir;
+    //protected Direction dir;
 
-    protected Inventory inventory;
+    //protected Inventory inventory;
 
-    protected Tool currentTool;
+    //protected Tool currentTool;
 
     public Entity(Point pos) {
         this.pos = new Point(pos);
-        this.width = Global.tileSize;
-        this.height = Global.tileSize;
-        this.lastPos = new Point();
-        this.dir = new Direction();
-        this.inventory = new Inventory();
     }
 
+    public abstract void update();
+
+    /*
     public Direction getDir() {
         return dir;
     }
@@ -64,10 +56,6 @@ public abstract class Entity extends WorldObject implements java.io.Serializable
         }
     }
 
-    public abstract void tick();
-
-    public abstract void update();
-
     public Tool getCurrentTool() {
         return currentTool == null ? new Tool_Hand() : currentTool;
     }
@@ -83,4 +71,5 @@ public abstract class Entity extends WorldObject implements java.io.Serializable
     public void setPos(Point pos) {
         this.pos = pos;
     }
+     */
 }

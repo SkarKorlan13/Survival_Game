@@ -5,9 +5,10 @@ import world.entity.Entity;
 
 public abstract class Tile extends WorldObject implements java.io.Serializable {
 
+    @Override
     public void interact(Entity e) {
-        System.out.println("id: " + getID() + " | tool: " + e.getCurrentTool().toolType);
-        System.out.println(state);
+        //System.out.println("id: " + getID() + " | tool: " + e.getCurrentTool().toolType);
+        //System.out.println(state);
     }
 
     public double getSpeedModifier() {

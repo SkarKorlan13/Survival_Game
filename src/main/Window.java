@@ -19,34 +19,20 @@ public class Window implements Runnable{
     public static int width;
     public static int height;
 
-    //public static boolean gamePaused = false;
-
-    //public static double aspectWidth = 1;
-    //public static double aspectHeight = 0.5;
-
-    private static int frames, ticks, fps, tps;
-    private static long lastSecond, lastFrame, frameTime, tickTimeRemaining;
+    private static int frames, fps;
+    private static long lastSecond, lastFrame, frameTime;
 
     public static Dimension maxSize;
 
-
-    //public static boolean fullscreen=false;
-
     public static void init(String title, Dimension dim) {
 
-        //maxSize = new Dimension((int)(Global.tileSize*Global.maxTileX*1.5), Global.tileSize*Global.maxTileY);
         maxSize = new Dimension(dim);
-
-        lastFrame = Time.now();
-        lastSecond = Time.now();
 
         width = maxSize.width;
         height = maxSize.height;
 
         frame = new JFrame(title);
         frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        //frame.setPreferredSize(minSize);
-        //frame.setSize(minSize);
         frame.setResizable(true);
         frame.setIconImage(ImageHandler.getImage("Player"));
 
@@ -56,11 +42,9 @@ public class Window implements Runnable{
         frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                /*
-                if (Global.game != null) {
+                /*if (Global.game != null) {
                     Global.game.save();
-                }
-                 */
+                }*/
                 super.windowClosing(e);
                 close = true;
             }
@@ -147,22 +131,12 @@ public class Window implements Runnable{
             if (now - lastSecond >= Time.NS_PER_SECOND) {
                 lastSecond = now;
                 fps = frames;
-                tps = ticks;
                 frames = 0;
-                ticks = 0;
-                System.out.println(fps + " | " + tps);
+                System.out.println("FPS: " + fps);
             }
 
             frameTime = now - lastFrame;
             lastFrame = now;
-
-            long tickTime = frameTime + tickTimeRemaining;
-            while (tickTime >= Time.NS_PER_TICK) {
-                tick();
-                tickTime -= Time.NS_PER_TICK;
-                ticks++;
-            }
-            tickTimeRemaining = tickTime;
 
             update();
 
@@ -178,11 +152,6 @@ public class Window implements Runnable{
         }
 
         System.exit(0);
-    }
-
-    private void tick() {
-        Keyboard.tick();
-        Global.currentState.tick();
     }
 
     private void update() {
